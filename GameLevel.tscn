@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://k5h8nckhjsyd"]
+
+[ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/dqum.jpg" id="1_ndngn"]
+[ext_resource type="Theme" uid="uid://b03ebmxh1lndl" path="res://Default2.tres" id="2_7t1a5"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -3.0
+offset_top = 8.0
+offset_right = 1165.0
+offset_bottom = 647.0
+texture = ExtResource("1_ndngn")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 606.0
+offset_top = 302.0
+offset_right = 815.0
+offset_bottom = 408.98
+theme = ExtResource("2_7t1a5")
+text = "6"
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 605.0
+offset_top = 438.0
+offset_right = 814.0
+offset_bottom = 544.98
+theme = ExtResource("2_7t1a5")
+text = "11"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 319.0
+offset_top = 439.0
+offset_right = 528.0
+offset_bottom = 545.98
+theme = ExtResource("2_7t1a5")
+text = "3"
+
+[node name="Button4" type="Button" parent="."]
+offset_left = 319.0
+offset_top = 302.0
+offset_right = 528.0
+offset_bottom = 408.98
+theme = ExtResource("2_7t1a5")
+text = "7"

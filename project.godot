@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="kids-learn-multiplication"
-run/main_scene="res://GameLevel.tscn"
+run/main_scene="res://GameLevel2.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+PlayerVars="res://PlayerVars.cs"
 
 [display]
 

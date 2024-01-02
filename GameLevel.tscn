@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://k5h8nckhjsyd"]
 
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/dqum.jpg" id="1_ndngn"]
-[ext_resource type="Theme" uid="uid://b03ebmxh1lndl" path="res://Default2.tres" id="2_7t1a5"]
+[ext_resource type="Theme" uid="uid://b03ebmxh1lndl" path="res://theme.tres" id="2_7t1a5"]
 
 [node name="Node2D" type="Node2D"]
 

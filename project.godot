@@ -30,6 +30,10 @@ project/assembly_name="kids-learn-multiplication"
 
 enabled=PackedStringArray()
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

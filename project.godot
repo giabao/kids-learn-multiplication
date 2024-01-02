@@ -12,7 +12,7 @@ config_version=5
 
 config/name="kids-learn-multiplication"
 run/main_scene="res://GameLevel.tscn"
-config/features=PackedStringArray("4.2", "GL Compatibility")
+config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]
@@ -22,7 +22,13 @@ window/size/viewport_height=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[dotnet]
 
+project/assembly_name="kids-learn-multiplication"
+
+[editor_plugins]
+
+enabled=PackedStringArray()
 
 [rendering]
 

@@ -32,20 +32,23 @@ public partial class GameLevel : Control {
 		foreach (Button btn in buttons) {
 			btn.Pressed += () => EmitSignal(SignalName.Answer, btn.Text.Trim().ToInt());
 		}
-		Answer += answer => {
-			if (answer == equations[questionNumber].Result) {
-				NextQuestion();
-			}
-		};
-		FinishLevel += level => {
-			if (playerData.Level >= MultiplyRule.Rules.Length - 1) {
-				GD.Print($"Finished!");
-			} else {
-				playerData.Level++;
-				LoadCurrentLevel();
-			}
-		};
+		Answer += OnAnswer;
+		FinishLevel += OnFinishLevel;
 		LoadCurrentLevel();
+	}
+
+	private void OnAnswer(int answer) {
+		if (answer == equations[questionNumber].Result) {
+			NextQuestion();
+		}
+	}
+	private void OnFinishLevel(int level) {
+		if (playerData.Level >= MultiplyRule.Rules.Length - 1) {
+			GD.Print($"Finished!");
+		} else {
+			playerData.Level++;
+			LoadCurrentLevel();
+		}
 	}
 
 	private void LoadCurrentLevel() {
@@ -79,6 +82,7 @@ public partial class GameLevel : Control {
 			var r0 = (CompoundRule)MultiplyRule.Rules[0];
 			TakeDistinces(() => r0.RandomEquation(rnd, true));
 		}
+		// Take random examples for rules in LOWER level. Random weight is stats.LosePercent
 		var (totalLosePercent, level2Percents) = p.Stats
 			.Where(e => e.Key < p.Level)
 			.Aggregate((0, (List<(int, int)>)[]), (acc, pair) => {

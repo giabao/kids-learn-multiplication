@@ -1,13 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 namespace Kids;
 
-struct RuleStat(int win, int lose) {
-    public int Win = win;
-    public int Lose = lose;
+public partial class RuleStat : Resource {
+    [Export] public int Win;
+    [Export] public int Lose;
+    // Without a parameterless constructor, Godot will have problems
+    // creating and editing your resource via the inspector.
+    public RuleStat() : this(0, 0) { }
+
+    // Warn: Use primary constructor (IDE0290)
+    // But we cannot use primary constructor
+    // CS9105: Cannot use primary constructor parameter 'int win' in this context. 
+    // at Godot.SourceGenerators/Godot.SourceGenerators.ScriptPropertyDefValGenerator/Kids.RuleStat_ScriptPropertyDefVal.generated.cs(17,35)
+
+    public RuleStat(int win, int lose) {
+        Win = win; Lose = lose;
+    }
+
     public int Done => Win + Lose;
     public int LosePercent => Done switch {
         0 => 80,

@@ -18,18 +18,16 @@ public partial class GameLevel : Control {
 	private Button[] buttons; // lateinit
 
 	private PlayerData playerData; // lateinit
-	public int Level => playerData?.Level ?? 0;
 	private List<MulEquation> equations; // lateinit
 	private int questionNumber;
 
 	[Signal] public delegate void AnswerEventHandler(int answer);
 	[Signal] public delegate void FinishLevelEventHandler(int level);
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
 		buttons = WorkingArea.GetNode("buttonsGrid").GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
 		playerData = PlayerData.Load();
-		foreach (Button btn in buttons) {
+		foreach (var btn in buttons) {
 			btn.Pressed += () => EmitSignal(SignalName.Answer, btn.Text.Trim().ToInt());
 		}
 		Answer += OnAnswer;
@@ -37,16 +35,18 @@ public partial class GameLevel : Control {
 		LoadCurrentLevel();
 	}
 
+	private int Level => playerData.Level;
+
 	private void OnAnswer(int answer) {
-		if (answer == equations[questionNumber].Result) {
-			NextQuestion();
-		}
+		var correct = answer == equations[questionNumber].Result;
+		playerData.FinishQuestion(correct);
+		if (correct) NextQuestion();
 	}
 	private void OnFinishLevel(int level) {
-		if (playerData.Level >= MultiplyRule.Rules.Length - 1) {
+		if (Level >= MultiplyRule.Rules.Length - 1) {
 			GD.Print($"Finished!");
 		} else {
-			playerData.Level++;
+			playerData.FinishLevel();
 			LoadCurrentLevel();
 		}
 	}

@@ -11,9 +11,21 @@ using RuleStats = Godot.Collections.Dictionary<int, RuleStat>;
 
 public partial class PlayerData : Resource {
 	[Export] public RuleStats Stats = [];
-	[Export] public int Level = 2; // [0, MultiplyRule.Rules.Length)
+	[Export] public int Level; // [0, MultiplyRule.Rules.Length)
 
-	const string SavePath = "user://PlayerData.tres";
+	public void FinishLevel() {
+		Level++;
+		Save();
+	}
+
+	public void FinishQuestion(bool correct) {
+		var stat = Stats.TryGetValue(Level, out var s) ? s : new RuleStat();
+		if (correct) stat.Win++;
+		else stat.Lose++;
+		Stats[Level] = stat;
+	}
+
+	private const string SavePath = "user://PlayerData.tres";
 	public static PlayerData Load() {
 		if (!ResourceLoader.Exists(SavePath)) return new();
 		try {
@@ -22,5 +34,9 @@ public partial class PlayerData : Resource {
 			GD.PrintErr(e, "PlayerData.Load");
 			return new();
 		}
+	}
+
+	private void Save() {
+		ResourceSaver.Save(this, SavePath);
 	}
 }

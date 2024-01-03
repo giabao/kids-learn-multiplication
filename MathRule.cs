@@ -44,7 +44,7 @@ sealed class CompoundRule(int left, string desc, int[] rightExamples) : Multiply
     public MulEquation RandomEquation(Random rnd, bool randomSwap = false) {
         var right = Left switch {
             0 or 1 => rnd.Next(121),
-            _ => rnd.Next(100)
+            _ => rnd.Next(15)
         };
         MulEquation e = new(Left, right);
         return randomSwap && rnd.NextBool() ? e.Swap : e;

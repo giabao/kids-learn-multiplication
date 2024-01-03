@@ -7,10 +7,7 @@
       "request": "launch",
       "program": "${config:godot-dotnet-tools.executablePath}",
       "preLaunchTask": "build",
-      "args": [
-        "--path",
-        "${workspaceRoot}"
-      ],
+      "args": [],
       "cwd": "${workspaceFolder}",
       "console": "internalConsole",
       "stopAtEntry": false
@@ -23,7 +20,7 @@
       "preLaunchTask": "build",
       "args": [
         "--path",
-        "${workspaceRoot}",
+        "${workspaceFolder}",
         "--editor"
       ],
       "cwd": "${workspaceFolder}",

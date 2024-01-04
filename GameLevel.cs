@@ -12,10 +12,8 @@ namespace Kids;
 using RuleStats = Godot.Collections.Dictionary<int, RuleStat>;
 
 public partial class GameLevel : Control {
-	private Button BackBtn => GetNode<Button>("backBtn");
-	private Control WorkingArea => GetNode<Control>("MarginContainer/workingArea");
-	private HealthBox Health => WorkingArea.GetNode<HealthBox>("health");
-	private Label EquationLabel => WorkingArea.GetNode<Label>("Equation/Label");
+	private Label EquationLabel => GetNode<Label>("%Equation/Label");
+	private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
 	private Button[] buttons; // lateinit
 
 	private PlayerData playerData; // lateinit
@@ -26,12 +24,12 @@ public partial class GameLevel : Control {
 	[Signal] public delegate void FinishLevelEventHandler(int level);
 
 	public override void _Ready() {
-		buttons = WorkingArea.GetNode("buttonsGrid").GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
+		buttons = GetNode("%ButtonsGrid").GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
 		playerData = PlayerData.Load();
 		foreach (var btn in buttons) {
 			btn.Pressed += () => OnAnswer(btn.Text.Trim().ToInt());
 		}
-		Health.HealthEmpty += () => {
+		GetNode<HealthBox>("%Health").HealthEmpty += () => {
 			GD.PrintErr("TODO HealthEmpty");
 		};
 		FinishLevel += OnFinishLevel;

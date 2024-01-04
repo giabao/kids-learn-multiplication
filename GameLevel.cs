@@ -12,25 +12,28 @@ namespace Kids;
 using RuleStats = Godot.Collections.Dictionary<int, RuleStat>;
 
 public partial class GameLevel : Control {
-	public Button BackBtn => GetNode<Button>("backBtn");
-	public Control WorkingArea => GetNode<Control>("MarginContainer/workingArea");
-	public Label EquationLabel => WorkingArea.GetNode<Label>("Equation/Label");
+	private Button BackBtn => GetNode<Button>("backBtn");
+	private Control WorkingArea => GetNode<Control>("MarginContainer/workingArea");
+	private HealthBox Health => WorkingArea.GetNode<HealthBox>("health");
+	private Label EquationLabel => WorkingArea.GetNode<Label>("Equation/Label");
 	private Button[] buttons; // lateinit
 
 	private PlayerData playerData; // lateinit
 	private List<MulEquation> equations; // lateinit
 	private int questionNumber;
 
-	[Signal] public delegate void AnswerEventHandler(int answer);
+	[Signal] public delegate void HealthDownEventHandler();
 	[Signal] public delegate void FinishLevelEventHandler(int level);
 
 	public override void _Ready() {
 		buttons = WorkingArea.GetNode("buttonsGrid").GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
 		playerData = PlayerData.Load();
 		foreach (var btn in buttons) {
-			btn.Pressed += () => EmitSignal(SignalName.Answer, btn.Text.Trim().ToInt());
+			btn.Pressed += () => OnAnswer(btn.Text.Trim().ToInt());
 		}
-		Answer += OnAnswer;
+		Health.HealthEmpty += () => {
+			GD.PrintErr("TODO HealthEmpty");
+		};
 		FinishLevel += OnFinishLevel;
 		LoadCurrentLevel();
 	}
@@ -41,6 +44,9 @@ public partial class GameLevel : Control {
 		var correct = answer == equations[questionNumber].Result;
 		playerData.FinishQuestion(correct);
 		if (correct) NextQuestion();
+		else {
+			EmitSignal(SignalName.HealthDown);
+		}
 	}
 	private void OnFinishLevel(int level) {
 		if (Level >= MultiplyRule.Rules.Length - 1) {

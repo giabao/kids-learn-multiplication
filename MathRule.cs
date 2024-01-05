@@ -12,8 +12,9 @@ class Operands(int left, int right) {
 class Equation(int left, int right, string op, int result) : Operands(left, right) {
     public readonly string Op = op;
     public readonly int Result = result;
-    public string Question => $"{Left} {Op} {Right} = ?";
-    public string Answer => $"{Left} {Op} {Right} = {Result}";
+    private string BaseText => $"{Left} {Op} {Right} =";
+    public string Question => $"{BaseText} ?";
+    public string Answer => $"{BaseText} {Result}";
 }
 class MulEquation(int left, int right) : Equation(left, right, "x", left * right) {
     public MulEquation Swap => new(Right, Left);

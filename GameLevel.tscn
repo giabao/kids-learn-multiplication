@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmpxkawapig87"]
+[gd_scene load_steps=19 format=3 uid="uid://bmpxkawapig87"]
 
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="1_6ew35"]
 [ext_resource type="Script" path="res://GameLevel.cs" id="2_jxx6d"]
@@ -6,6 +6,9 @@
 [ext_resource type="Theme" uid="uid://dqbxfmodoew3d" path="res://theme.tres" id="4_rv00e"]
 [ext_resource type="Script" path="res://HealthBox.cs" id="5_l15e5"]
 [ext_resource type="Texture2D" uid="uid://wcinwsuylgr6" path="res://assets/red-heart.png" id="5_qq0tq"]
+[ext_resource type="Texture2D" uid="uid://bpatwsvdv66hu" path="res://assets/del.png" id="7_3g33j"]
+[ext_resource type="Script" path="res://NumPad.cs" id="7_7g7r3"]
+[ext_resource type="Texture2D" uid="uid://c2ix4dhn5jhfl" path="res://assets/enter.png" id="8_5g4l6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7lqyx"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -29,9 +32,37 @@ border_color = Color(1, 1, 1, 1)
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hu3ds"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+corner_radius_top_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s80s7"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+corner_radius_top_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bwx4"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+corner_radius_top_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clmkp"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtvvo"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dv2fx"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ndqhx"]
+bg_color = Color(0.498039, 0.705882, 0.760784, 1)
+corner_radius_top_right = 20
+
 [node name="PanelContainer" type="PanelContainer"]
-offset_right = 1280.0
-offset_bottom = 960.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
@@ -161,6 +192,7 @@ fill_mode = 3
 show_percentage = false
 
 [node name="ButtonsGrid" type="GridContainer" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -199,3 +231,159 @@ custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
 theme = ExtResource("4_rv00e")
 text = "7"
+
+[node name="NumPad" type="Control" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -356.0
+offset_right = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("7_7g7r3")
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -290.0
+offset_right = 290.0
+offset_bottom = 180.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 5
+
+[node name="Button1" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_hu3ds")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s80s7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1bwx4")
+text = "1"
+
+[node name="Button2" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "2"
+
+[node name="Button3" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "3"
+
+[node name="Button4" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "4"
+
+[node name="Button5" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_ndqhx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ndqhx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ndqhx")
+text = "5"
+
+[node name="Button6" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "6"
+
+[node name="Button7" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "7"
+
+[node name="Button8" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "8"
+
+[node name="Button9" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "9"
+
+[node name="Button0" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad/GridContainer"]
+custom_minimum_size = Vector2(110, 90)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_clmkp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
+text = "0"
+
+[node name="Del" type="TextureButton" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad"]
+layout_mode = 2
+offset_left = 65.0
+offset_top = 241.0
+offset_right = 377.0
+offset_bottom = 360.0
+scale = Vector2(0.8, 0.8)
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("7_3g33j")
+texture_pressed = ExtResource("7_3g33j")
+texture_hover = ExtResource("7_3g33j")
+stretch_mode = 4
+
+[node name="Enter" type="TextureButton" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/NumPad"]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 241.0
+offset_right = 830.0
+offset_bottom = 359.0
+scale = Vector2(0.8, 0.8)
+texture_normal = ExtResource("8_5g4l6")
+texture_pressed = ExtResource("8_5g4l6")
+texture_hover = ExtResource("8_5g4l6")

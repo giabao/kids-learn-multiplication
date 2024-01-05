@@ -11,7 +11,7 @@ namespace Kids;
 // @see https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html
 using RuleStats = Godot.Collections.Dictionary<int, RuleStat>;
 
-enum AnserMode { Choise, Type }
+enum AnserMode { Choise, NumPad }
 
 public partial class GameLevel : Control {
 	private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
@@ -32,7 +32,7 @@ public partial class GameLevel : Control {
 			if (_mode != value) {
 				_mode = value;
 				ButtonsGrid.Visible = _mode == AnserMode.Choise;
-				NumPad.Visible = _mode == AnserMode.Type;
+				NumPad.Visible = _mode == AnserMode.NumPad;
 			}
 		}
 	}
@@ -83,7 +83,7 @@ public partial class GameLevel : Control {
 					btn.Text = answer.ToString();
 				}
 				break;
-			case AnserMode.Type:
+			case AnserMode.NumPad:
 				NumPad.Reset();
 				break;
 		}
@@ -103,9 +103,9 @@ public partial class GameLevel : Control {
 	private void OnAnswerDone() {
 		switch (Mode) {
 			case AnserMode.Choise:
-				LoadCurrentLevel(AnserMode.Type);
+				LoadCurrentLevel(AnserMode.NumPad);
 				break;
-			case AnserMode.Type:
+			case AnserMode.NumPad:
 				EmitSignal(SignalName.FinishLevel);
 				break;
 		}

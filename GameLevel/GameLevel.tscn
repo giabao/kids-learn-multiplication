@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="1_6ew35"]
 [ext_resource type="Script" path="res://GameLevel/GameLevel.cs" id="2_jxx6d"]
 [ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="3_qlf87"]
-[ext_resource type="Theme" uid="uid://dqbxfmodoew3d" path="res://theme.tres" id="4_rv00e"]
 [ext_resource type="Script" path="res://GameLevel/HealthBox.cs" id="5_l15e5"]
 [ext_resource type="Texture2D" uid="uid://wcinwsuylgr6" path="res://assets/red-heart.png" id="5_qq0tq"]
+[ext_resource type="Theme" uid="uid://qsr4slii6rq7" path="res://theme.tres" id="6_vgxbh"]
 [ext_resource type="Texture2D" uid="uid://bpatwsvdv66hu" path="res://assets/del.png" id="7_3g33j"]
 [ext_resource type="Script" path="res://GameLevel/NumPad.cs" id="7_7g7r3"]
 [ext_resource type="Texture2D" uid="uid://c2ix4dhn5jhfl" path="res://assets/enter.png" id="8_5g4l6"]
@@ -211,25 +211,29 @@ columns = 2
 [node name="Button1" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
-theme = ExtResource("4_rv00e")
+theme = ExtResource("6_vgxbh")
+theme_type_variation = &"ChoiseButton"
 text = "6"
 
 [node name="Button2" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
-theme = ExtResource("4_rv00e")
+theme = ExtResource("6_vgxbh")
+theme_type_variation = &"ChoiseButton"
 text = "3"
 
 [node name="Button3" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
-theme = ExtResource("4_rv00e")
+theme = ExtResource("6_vgxbh")
+theme_type_variation = &"ChoiseButton"
 text = "11"
 
 [node name="Button4" type="Button" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
-theme = ExtResource("4_rv00e")
+theme = ExtResource("6_vgxbh")
+theme_type_variation = &"ChoiseButton"
 text = "7"
 
 [node name="NumPad" type="Control" parent="CenterContainer/GameLevel/MarginContainer/WorkingArea"]

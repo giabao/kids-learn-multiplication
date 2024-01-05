@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kids-learn-multiplication", "kids-learn-multiplication.csproj", "{A7BA9AE4-F192-454D-A641-A1E32CA5C114}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kids", "Kids.csproj", "{A7BA9AE4-F192-454D-A641-A1E32CA5C114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="kids-learn-multiplication"
+config/name="Kids"
 run/main_scene="res://GameLevel/GameLevel.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -24,7 +24,7 @@ window/stretch/aspect="expand"
 
 [dotnet]
 
-project/assembly_name="kids-learn-multiplication"
+project/assembly_name="Kids"
 
 [editor_plugins]
 
@@ -38,3 +38,4 @@ import/blender/enabled=false
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.870588, 0.945098, 0.980392, 1)

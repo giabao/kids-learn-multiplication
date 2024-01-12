@@ -7,7 +7,7 @@ public partial class HealthBox : VBoxContainer {
 	private int Health => GetChildCount();
 
 	public override void _Ready() {
-		GetNode<GameLevel>("%GameLevel").HealthDown += OnHealthDown;
+		(Owner as GameLevel)!.HealthDown += OnHealthDown;
 	}
 	private void OnHealthDown() {
 		if (Health == 1) {

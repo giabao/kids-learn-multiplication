@@ -1,49 +1,63 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using Range = System.Range;
 
 namespace Kids;
 
 public partial class StatsTable : GridContainer {
+	private const string ThemeTypeLabel = "StatsLabel";
+	private const string ThemeTypeButton = "StatsButton";
+	private PlayerData playerData; // lateinit
+
 	public override void _Ready() {
-		var theme = ResourceLoader.Load<Theme>("res://theme.tres");;
+		playerData = PlayerData.Load();
+
+		Theme theme = ResourceLoader.Load<Theme>("res://theme.tres");
 		var size = new Vector2(70, 70);
 
 		for (var i = 0; i <= 10; i++) {
-			AddLabel(i);
+			AddChild(CellLabel(i));
 		}
 		for (var i = 0; i <= 10; i++) {
-			AddLabel(i);
+			AddChild(CellLabel(i));
 			for (var j = 0; j <= 10; j++) {
-				AddButton(i * j, j*0.04f);
+				var level = MultiplyRule.RuleIndex(i, j);
+				RuleStat? stat = playerData.Stats.GetValueOrDefault(level);
+				if (stat != null) AddButton(i * j, CellColor(stat));
+				else AddLabel(i * j);
 			}
 		}
 
 		return;
 
-		void AddLabel(int text) {
-			var c = new Label();
-			c.Text = text.ToString();
-			c.CustomMinimumSize = size;
-			c.HorizontalAlignment = HorizontalAlignment.Center;
-			c.VerticalAlignment = VerticalAlignment.Center;
-			c.Theme= theme;
-			c.ThemeTypeVariation = "StatsLabel";
-			AddChild(c);
-		}
+		Label CellLabel(int text) => new Label {
+			Text = text.ToString(),
+			CustomMinimumSize = size,
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
+			Theme = theme,
+			ThemeTypeVariation = ThemeTypeLabel
+		};
 
-		void AddButton(int text, float hue) {
-			var c = new Button();
-			c.Text = text.ToString();
-			c.CustomMinimumSize = size;
-			c.Theme= theme;
-			c.ThemeTypeVariation = "StatsButton";
-			var s = new StyleBoxFlat();
-			s.BgColor = Color.FromHsv(hue, 1, 1);
-			c.AddThemeStyleboxOverride("normal", s);
-			c.AddThemeStyleboxOverride("pressed", s);
-			AddChild(c);
+		Button CellButton(int text, int row, int col) {
+			var c = new Button {
+				Text = text.ToString(),
+				CustomMinimumSize = size,
+				Theme = theme,
+				ThemeTypeVariation = ThemeTypeButton
+			};
+			
+			var level = MultiplyRule.RuleIndex(row, col);
+			RuleStat? stat = playerData.Stats.GetValueOrDefault(level);
+			StyleBox s = stat == null?
+				theme.GetStylebox("normal", ThemeTypeLabel) :
+				new StyleBoxFlat { BgColor = bgColor };
+			c.OverrideThemeStylebox(s, "normal", "pressed", "hover");
+			c.MouseDefaultCursorShape = CursorShape.PointingHand;
+			return c;
 		}
 	}
 
+	private static Color CellColor(RuleStat stat) => Color.FromHsv(stat.LosePercent / 100f * 0.4f, 1, 1);
 }

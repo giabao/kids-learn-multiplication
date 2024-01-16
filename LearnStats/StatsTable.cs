@@ -1,16 +1,19 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using Range = System.Range;
+using Kids.LearnStats;
 
 namespace Kids;
 
 public partial class StatsTable : GridContainer {
+	private Info _info; // lateinit
+	
 	private const string ThemeTypeLabel = "StatsLabel";
 	private const string ThemeTypeButton = "StatsButton";
 	private PlayerData playerData; // lateinit
 
 	public override void _Ready() {
+		_info = GetNode<Info>("%Info");
+		_info.Visible = false;
 		playerData = PlayerData.Load();
 
 		Theme theme = ResourceLoader.Load<Theme>("res://theme.tres");
@@ -22,10 +25,7 @@ public partial class StatsTable : GridContainer {
 		for (var i = 0; i <= 10; i++) {
 			AddChild(CellLabel(i));
 			for (var j = 0; j <= 10; j++) {
-				var level = MultiplyRule.RuleIndex(i, j);
-				RuleStat? stat = playerData.Stats.GetValueOrDefault(level);
-				if (stat != null) AddButton(i * j, CellColor(stat));
-				else AddLabel(i * j);
+				AddChild(CellButton(i * j, i, j));
 			}
 		}
 
@@ -36,9 +36,7 @@ public partial class StatsTable : GridContainer {
 			CustomMinimumSize = size,
 			HorizontalAlignment = HorizontalAlignment.Center,
 			VerticalAlignment = VerticalAlignment.Center,
-			Theme = theme,
-			ThemeTypeVariation = ThemeTypeLabel
-		};
+		}.FontColor(Colors.Black).FontSize(40);
 
 		Button CellButton(int text, int row, int col) {
 			var c = new Button {
@@ -52,9 +50,16 @@ public partial class StatsTable : GridContainer {
 			RuleStat? stat = playerData.Stats.GetValueOrDefault(level);
 			StyleBox s = stat == null?
 				theme.GetStylebox("normal", ThemeTypeLabel) :
-				new StyleBoxFlat { BgColor = bgColor };
+				new StyleBoxFlat { BgColor = CellColor(stat) };
 			c.OverrideThemeStylebox(s, "normal", "pressed", "hover");
 			c.MouseDefaultCursorShape = CursorShape.PointingHand;
+			c.Pressed += () => {
+				var gPos = c.GlobalPosition;
+				var pos = gPos - new Vector2(_info.Size.X / 2, _info.Size.Y);
+				if(pos.X < 10) pos.X = gPos.X + c.Size.X + 10;
+				if (pos.Y < 10) pos.Y = gPos.Y + c.Size.Y + 10;
+				_info.Show(level, stat, pos);
+			};
 			return c;
 		}
 	}

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://k2y62syb01i7"]
+
+[ext_resource type="Texture2D" uid="uid://crid3uhbhovbr" path="res://assets/LevelMap/LevelMap.png" id="1_nhnu1"]
+[ext_resource type="Script" path="res://LevelMap/LevelMap.cs" id="1_wjebk"]
+
+[node name="LevelMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wjebk")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8888, 0)
+layout_mode = 2
+texture = ExtResource("1_nhnu1")
+stretch_mode = 1

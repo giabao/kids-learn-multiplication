@@ -20,13 +20,15 @@ class MulEquation(int left, int right) : Equation(left, right, "x", left * right
     public MulEquation Swap => new(Right, Left);
 }
 
-abstract class MathRule<T>(string desc, string audio) where T : Equation {
+abstract class MathRule<T>(string desc) where T : Equation {
     public readonly string Desc = desc;
-    public readonly string Audio = audio;
+    public abstract string Audio { get; }
     public abstract List<T> Examples();
 }
-abstract class MultiplyRule(int left, string desc, string audio) : MathRule<MulEquation>(desc, audio) {
-    protected readonly int Left = left;
+abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc) {
+    public abstract string Name { get; }
+    public override string Audio => $"rule/{Name}";
+    public readonly int Left = left;
 
     private const int OperandMax = 9;
     public static readonly MultiplyRule[] Rules = new MultiplyRule[3 + (OperandMax - 1) * OperandMax / 2];
@@ -46,7 +48,8 @@ abstract class MultiplyRule(int left, string desc, string audio) : MathRule<MulE
         _ => (left - 2) * (OperandMax - 2 + 1) + (right - 2) + 3
     };
 }
-sealed class CompoundRule(int left, string desc, int[] rightExamples) : MultiplyRule(left, desc, $"rule/x{left}") {
+sealed class CompoundRule(int left, string desc, int[] rightExamples) : MultiplyRule(left, desc) {
+    public override string Name => $"x{Left}";
     public override List<MulEquation> Examples() => rightExamples.Select(right => new MulEquation(Left, right)).ToList();
     public MulEquation RandomEquation(Random rnd, bool randomSwap = false) {
         var right = Left switch {
@@ -58,7 +61,8 @@ sealed class CompoundRule(int left, string desc, int[] rightExamples) : Multiply
     }
 }
 
-sealed class SimpleRule(int left, int right) : MultiplyRule(left, $"{left} x {right} = {left * right}", $"{left}x{right}") {
+sealed class SimpleRule(int left, int right) : MultiplyRule(left, $"{left} x {right} = {left * right}") {
+    public override string Name => $"{Left}x{right}";
     public override List<MulEquation> Examples() => [new(Left, right)];
     public MulEquation ToEquation => new(Left, right);
 }

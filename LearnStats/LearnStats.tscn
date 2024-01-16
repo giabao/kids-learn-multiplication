@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://ejj0sb40th0b"]
+[gd_scene load_steps=8 format=3 uid="uid://ejj0sb40th0b"]
 
 [ext_resource type="Script" path="res://LearnStats/StatsTable.cs" id="1_wx06s"]
+[ext_resource type="Texture2D" uid="uid://ulwq1hkieb4d" path="res://assets/sky.jpg" id="2_i41um"]
+[ext_resource type="Script" path="res://LearnStats/Info.cs" id="2_iiowu"]
+[ext_resource type="Texture2D" uid="uid://cfb0tmj4e6nst" path="res://assets/close.png" id="3_gma3b"]
+[ext_resource type="Texture2D" uid="uid://c2jhhvfr76da3" path="res://assets/home-circle.png" id="5_8ccil"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwh2j"]
+bg_color = Color(0.964706, 0.964706, 0.964706, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cqcf"]
+bg_color = Color(0.756863, 0.756863, 0.756863, 1)
 
 [node name="LearnStats" type="Control"]
 layout_mode = 3
@@ -9,6 +22,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Home" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 68.0
+offset_bottom = 68.0
+texture_normal = ExtResource("5_8ccil")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 400.0
+offset_right = 464.0
+offset_bottom = 475.0
+rotation = 1.5708
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Learning Progress"
 
 [node name="StatsTable" type="GridContainer" parent="."]
 layout_mode = 1
@@ -29,3 +61,132 @@ script = ExtResource("1_wx06s")
 [node name="Control" type="Control" parent="StatsTable"]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
+
+[node name="Info" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 500.0
+offset_right = 1040.0
+offset_bottom = 300.0
+theme_override_constants/separation = -1
+script = ExtResource("2_iiowu")
+
+[node name="Control" type="Control" parent="Info"]
+custom_minimum_size = Vector2(540, 50)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Info/Control"]
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 50.0
+texture = ExtResource("2_i41um")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Close" type="TextureButton" parent="Info/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_bottom = 48.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_gma3b")
+
+[node name="Title" type="Label" parent="Info/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 540.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 30
+text = "Rule: x0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Content" type="Panel" parent="Info"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iwh2j")
+
+[node name="Desc" type="Label" parent="Info/Content"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 540.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Bất kỳ số nào nhân với 0 cũng bằng 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Info/Content"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -125.0
+offset_right = 270.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 66
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="Info/Content/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5cqcf")
+
+[node name="GridContainer" type="GridContainer" parent="Info/Content/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 2
+
+[node name="Label1" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Done:"
+
+[node name="Done" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "6"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "Win:"
+
+[node name="Win" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_font_sizes/font_size = 26
+text = "4"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "Lose:"
+
+[node name="Lose" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "2"
+horizontal_alignment = 1

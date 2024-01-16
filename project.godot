@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Kids"
-run/main_scene="res://LearnStats/LearnStats.tscn"
+run/main_scene="res://LevelMap/LevelMap.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -33,6 +33,10 @@ enabled=PackedStringArray()
 [filesystem]
 
 import/blender/enabled=false
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [rendering]
 

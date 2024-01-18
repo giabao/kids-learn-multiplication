@@ -13,16 +13,16 @@ public partial class PlayerData : Resource {
 	[Export] public RuleStats Stats = [];
 	[Export] public int Level; // [0, MultiplyRule.Rules.Length)
 
-	public void FinishLevel() {
-		Level++;
+	public void FinishLevel(int level) {
+		if (level == Level) Level++;
 		Save();
 	}
 
-	public void FinishQuestion(bool correct) {
-		var stat = Stats.TryGetValue(Level, out var s) ? s : new RuleStat();
+	public void FinishQuestion(bool correct, int level) {
+		var stat = Stats.TryGetValue(level, out var s) ? s : new RuleStat();
 		if (correct) stat.Win++;
 		else stat.Lose++;
-		Stats[Level] = stat;
+		Stats[level] = stat;
 	}
 
 	private const string SavePath = "user://PlayerData.tres";

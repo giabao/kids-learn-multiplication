@@ -5,12 +5,6 @@ using Godot;
 
 namespace Kids;
 
-// Map level number to RuleStat
-// Use Godot's Dictionary to support [Export]
-// @see https://docs.godotengine.org/en/4.2/tutorials/scripting/c_sharp/diagnostics/GD0102.html
-// @see https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html
-using RuleStats = Godot.Collections.Dictionary<int, RuleStat>;
-
 enum AnserMode { Choise, NumPad }
 
 public partial class GameLevel : Control {
@@ -36,14 +30,18 @@ public partial class GameLevel : Control {
 			}
 		}
 	}
-	private int Level => playerData.Level;
+
+	public int Level;
 
 	[Signal] public delegate void HealthDownEventHandler();
 	[Signal] public delegate void FinishLevelEventHandler();
 	[Signal] public delegate void AnswerDoneEventHandler();
 
-
 	public override void _Ready() {
+		GetNode<TextureButton>("%BackBtn").Pressed += () => {
+			((LevelMap.LevelMap)GetNode("/root/LevelMap")).Visible = true;
+			GetParent().RemoveChild(this);
+		};
 		buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
 		playerData = PlayerData.Load();
 		foreach (var btn in buttons) {
@@ -62,7 +60,7 @@ public partial class GameLevel : Control {
 
 	private void LoadCurrentLevel(AnserMode mode) {
 		Mode = mode;
-		equations = Examples(playerData);
+		equations = Examples(playerData, Level);
 		questionNumber = -1;
 		NextQuestion();
 	}
@@ -96,7 +94,7 @@ public partial class GameLevel : Control {
 
 	private void OnAnswer(int answer) {
 		var correct = answer == equations[questionNumber].Result;
-		playerData.FinishQuestion(correct);
+		playerData.FinishQuestion(correct, Level);
 		if (correct) NextQuestion();
 		else EmitSignal(SignalName.HealthDown);
 	}
@@ -114,20 +112,20 @@ public partial class GameLevel : Control {
 		if (Level >= MultiplyRule.Rules.Length - 1) {
 			GD.Print($"TODO Finished!");
 		} else {
-			playerData.FinishLevel();
+			playerData.FinishLevel(Level);
 			LoadCurrentLevel(AnserMode.Choise);
 		}
 	}
 
 	private const int QuestionsPerLevel = 4;
-	private static List<MulEquation> Examples(PlayerData p) {
-		if (p.Level == 0) {
+	private static List<MulEquation> Examples(PlayerData p, int level) {
+		if (level == 0) {
 			var r0 = (CompoundRule)MultiplyRule.Rules[0];
 			TakeDistinces(() => r0.RandomEquation(rnd, true));
 		}
 		// Take random examples for rules in LOWER level. Random weight is stats.LosePercent
 		var (totalLosePercent, level2Percents) = p.Stats
-			.Where(e => e.Key < p.Level)
+			.Where(e => e.Key < level)
 			.Aggregate((0, (List<(int, int)>)[]), (acc, pair) => {
 				var (level, stat) = pair;
 				var (sum, list) = acc;
@@ -136,7 +134,7 @@ public partial class GameLevel : Control {
 				return (sum, list);
 			});
 
-		var e = GetEquation(MultiplyRule.Rules[p.Level]);
+		var e = GetEquation(MultiplyRule.Rules[level]);
 
 		List<MulEquation> ret = [e];
 		if (e.Left != e.Right) ret.Add(e.Swap);

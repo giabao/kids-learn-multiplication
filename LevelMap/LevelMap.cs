@@ -29,10 +29,16 @@ public partial class LevelMap : Control {
 				IsCurrent = i == playerData.Level,
 				Disabled = i > playerData.Level,
 			};
-			btn.Pressed += () => {
-				GD.Print($"Level {i} selected: {btn.Position}");
-			};
+			btn.Pressed += () => _loadLevel(i);
 			textureRect.AddChild(btn);
 		}
+	}
+
+	private void _loadLevel(int level) {
+		var scene = ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn");
+		var gl = (GameLevel)scene.Instantiate();
+		gl.Level = level;
+		GetTree().Root.AddChild(gl);
+		Visible = false;
 	}
 }

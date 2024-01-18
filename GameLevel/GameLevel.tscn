@@ -391,3 +391,5 @@ offset_right = 43.0
 offset_bottom = 53.0
 texture_normal = ExtResource("3_qlf87")
 stretch_mode = 4
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

@@ -8,6 +8,7 @@ namespace Kids;
 enum AnswerMode { Choise, NumPad }
 
 public partial class GameLevel : Control {
+	private AudioStreamPlayer Audio => GetNode<AudioStreamPlayer>("AudioStreamPlayer");
 	private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
 	private NumPad NumPad => GetNode<NumPad>("%NumPad");
 
@@ -37,10 +38,8 @@ public partial class GameLevel : Control {
 	[Signal] public delegate void AnswerDoneEventHandler();
 
 	public override void _Ready() {
-		GetNode<TextureButton>("%BackBtn").Pressed += () => {
-			((LevelMap.LevelMap)GetNode("/root/LevelMap")).Visible = true;
-			GetParent().RemoveChild(this);
-		};
+		GetNode<TextureButton>("%BackBtn").Pressed += Back;
+		
 		_buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
 		foreach (var btn in _buttons) {
 			btn.Pressed += () => OnAnswer(btn.Text.Trim().ToInt());
@@ -50,7 +49,9 @@ public partial class GameLevel : Control {
 		NumPad.ValueChanged += OnPadValueChanged;
 
 		GetNode<HealthBox>("%Health").HealthEmpty += () => {
-			GD.PrintErr("TODO HealthEmpty");
+			Audio.Stream = ResourceLoader.Load<AudioStream>("res://assets/game-over.ogg");
+			Audio.Play();
+			Audio.Finished += Back;
 		};
 		AnswerDone += OnAnswerDone;
 		FinishLevel += OnFinishLevel;
@@ -84,6 +85,10 @@ public partial class GameLevel : Control {
 				NumPad.Reset();
 				break;
 		}
+	}
+	private void Back() {
+		((LevelMap.LevelMap)GetNode("/root/LevelMap")).Visible = true;
+		GetParent().RemoveChild(this);
 	}
 	private void OnPadValueChanged(string value) {
 		var s = EquationLabel.Text;

@@ -75,8 +75,8 @@ public partial class GameLevel : Control {
 		EquationLabel.Text = e.Question;
 		switch (Mode) {
 			case AnswerMode.Choise:
-				var answers = TakeDistinces([e.Result], () => rnd.Next(101), _buttons.Length).ToArray();
-				rnd.Shuffle(answers);
+				var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();
+				Rnd.Shuffle(answers);
 				foreach (var (btn, answer) in _buttons.Zip(answers)) {
 					btn.Text = answer.ToString();
 				}
@@ -125,7 +125,7 @@ public partial class GameLevel : Control {
 	private static List<MulEquation> Examples(PlayerData p, int level) {
 		if (level == 0) {
 			var r0 = (CompoundRule)MultiplyRule.Rules[0];
-			TakeDistinces(() => r0.RandomEquation(rnd, true));
+			TakeUniques([], () => r0.RandomEquation(Rnd, true));
 		}
 		// Take random examples for rules in LOWER level. Random weight is stats.LosePercent
 		var (totalLosePercent, level2Percents) = p.Stats
@@ -142,32 +142,30 @@ public partial class GameLevel : Control {
 
 		List<MulEquation> ret = [e];
 		if (e.Left != e.Right) ret.Add(e.Swap);
-		TakeDistinces(ret, () => {
-			var percent = rnd.Next(totalLosePercent);
+		TakeUniques(ret, () => {
+			var percent = Rnd.Next(totalLosePercent);
 			var level = level2Percents.FirstOrDefault(p => p.Item2 > percent).Item1;
 			MultiplyRule r = MultiplyRule.Rules[level];
 			var e = GetEquation(r);
-			return rnd.NextBool() ? e : e.Swap;
+			return Rnd.NextBool() ? e : e.Swap;
 		});
 		if (e.Left != e.Right) ret.Swap(1, Random.Shared.Next(ret.Count));
 		return ret;
 	}
 
-	private static readonly Random rnd = Random.Shared;
+	private static readonly Random Rnd = Random.Shared;
 	private static MulEquation GetEquation(MultiplyRule r) => r switch {
-		CompoundRule r1 => r1.RandomEquation(rnd),
+		CompoundRule r1 => r1.RandomEquation(Rnd),
 		_ => (r as SimpleRule)!.ToEquation
 	};
 
-	private static List<T> TakeDistinces<T>(Func<T> rndGen, int count = QuestionsPerLevel) => TakeDistinces([], rndGen, count);
-	private static List<T> TakeDistinces<T>(List<T> result, Func<T> rndGen, int count = QuestionsPerLevel) {
+	private static List<T> TakeUniques<T>(List<T> result, Func<T> rndGen, int count = QuestionsPerLevel) {
 		for (var i = result.Count; i < count; i++) {
 			while (true) {
 				var t = rndGen();
-				if (!result.Contains(t)) {
-					result.Add(t);
-					break;
-				}
+				if (result.Contains(t)) continue;
+				result.Add(t);
+				break;
 			}
 		}
 		return result;

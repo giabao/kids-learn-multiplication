@@ -5,7 +5,7 @@ using System.Linq;
 namespace Kids.LevelMap;
 public partial class LevelMap : Control {
 	private const int BgWidth = 2222;
-	private static Vector2[] ButtonPositions = [
+	private static readonly Vector2[] ButtonPositions = [
 		new(-61 , 272 ),
 		new(157 , 382 ),
 		new(401,	388 ),
@@ -17,24 +17,25 @@ public partial class LevelMap : Control {
 		new(1681, 400),
 		new(1905, 300),
 	];
-	private PlayerData playerData; // lateinit
+	private PlayerData _playerData = PlayerData.Load();
+
 	public override void _Ready() {
-		playerData = PlayerData.Load();
+		_playerData = PlayerData.Load();
 		var textureRect = GetNode<TextureRect>("%TextureRect");
 		foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
 			var dx = BgWidth * (i / ButtonPositions.Length);
 			var btn = new LevelButton() {
 				Text = rule.Name,
 				Position = ButtonPositions[i % ButtonPositions.Length] + new Vector2(dx, 0),
-				IsCurrent = i == playerData.Level,
-				Disabled = i > playerData.Level,
+				IsCurrent = i == _playerData.Level,
+				Disabled = i > _playerData.Level,
 			};
-			btn.Pressed += () => _loadLevel(i);
+			btn.Pressed += () => LoadLevel(i);
 			textureRect.AddChild(btn);
 		}
 	}
 
-	private void _loadLevel(int level) {
+	private void LoadLevel(int level) {
 		var scene = ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn");
 		var gl = (GameLevel)scene.Instantiate();
 		gl.Level = level;

@@ -5,7 +5,7 @@ using Godot;
 
 namespace Kids;
 
-enum AnserMode { Choise, NumPad }
+enum AnswerMode { Choise, NumPad }
 
 public partial class GameLevel : Control {
 	private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
@@ -13,21 +13,20 @@ public partial class GameLevel : Control {
 
 	private Label EquationLabel => GetNode<Label>("%Equation/Label");
 	private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
-	private Button[] buttons; // lateinit
+	private Button[] _buttons; // lateinit
 
-	private PlayerData playerData; // lateinit
-	private List<MulEquation> equations; // lateinit
-	private int questionNumber;
+	private PlayerData _playerData = PlayerData.Load();
+	private List<MulEquation> _equations; // lateinit
+	private int _questionNumber;
 
-	private AnserMode _mode = AnserMode.Choise;
-	private AnserMode Mode {
+	private AnswerMode _mode = AnswerMode.Choise;
+	private AnswerMode Mode {
 		get => _mode;
 		set {
-			if (_mode != value) {
-				_mode = value;
-				ButtonsGrid.Visible = _mode == AnserMode.Choise;
-				NumPad.Visible = _mode == AnserMode.NumPad;
-			}
+			if (_mode == value) return;
+			_mode = value;
+			ButtonsGrid.Visible = _mode == AnswerMode.Choise;
+			NumPad.Visible = _mode == AnswerMode.NumPad;
 		}
 	}
 
@@ -42,11 +41,11 @@ public partial class GameLevel : Control {
 			((LevelMap.LevelMap)GetNode("/root/LevelMap")).Visible = true;
 			GetParent().RemoveChild(this);
 		};
-		buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
-		playerData = PlayerData.Load();
-		foreach (var btn in buttons) {
+		_buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
+		foreach (var btn in _buttons) {
 			btn.Pressed += () => OnAnswer(btn.Text.Trim().ToInt());
 		}
+		
 		NumPad.Submit += OnAnswer;
 		NumPad.ValueChanged += OnPadValueChanged;
 
@@ -55,33 +54,33 @@ public partial class GameLevel : Control {
 		};
 		AnswerDone += OnAnswerDone;
 		FinishLevel += OnFinishLevel;
-		LoadCurrentLevel(AnserMode.Choise);
+		LoadCurrentLevel(AnswerMode.Choise);
 	}
 
-	private void LoadCurrentLevel(AnserMode mode) {
+	private void LoadCurrentLevel(AnswerMode mode) {
 		Mode = mode;
-		equations = Examples(playerData, Level);
-		questionNumber = -1;
+		_equations = Examples(_playerData, Level);
+		_questionNumber = -1;
 		NextQuestion();
 	}
 
 	private void NextQuestion() {
-		if (questionNumber >= equations.Count - 1) {
+		if (_questionNumber >= _equations.Count - 1) {
 			GD.Print($"AnswerDone for level {Level} in mode {Mode}");
 			EmitSignal(SignalName.AnswerDone);
 			return;
 		}
-		var e = equations[++questionNumber];
+		var e = _equations[++_questionNumber];
 		EquationLabel.Text = e.Question;
 		switch (Mode) {
-			case AnserMode.Choise:
-				var answers = TakeDistinces([e.Result], () => rnd.Next(101), buttons.Length).ToArray();
+			case AnswerMode.Choise:
+				var answers = TakeDistinces([e.Result], () => rnd.Next(101), _buttons.Length).ToArray();
 				rnd.Shuffle(answers);
-				foreach (var (btn, answer) in buttons.Zip(answers)) {
+				foreach (var (btn, answer) in _buttons.Zip(answers)) {
 					btn.Text = answer.ToString();
 				}
 				break;
-			case AnserMode.NumPad:
+			case AnswerMode.NumPad:
 				NumPad.Reset();
 				break;
 		}
@@ -93,17 +92,17 @@ public partial class GameLevel : Control {
 	}
 
 	private void OnAnswer(int answer) {
-		var correct = answer == equations[questionNumber].Result;
-		playerData.FinishQuestion(correct, Level);
+		var correct = answer == _equations[_questionNumber].Result;
+		_playerData.FinishQuestion(correct, Level);
 		if (correct) NextQuestion();
 		else EmitSignal(SignalName.HealthDown);
 	}
 	private void OnAnswerDone() {
 		switch (Mode) {
-			case AnserMode.Choise:
-				LoadCurrentLevel(AnserMode.NumPad);
+			case AnswerMode.Choise:
+				LoadCurrentLevel(AnswerMode.NumPad);
 				break;
-			case AnserMode.NumPad:
+			case AnswerMode.NumPad:
 				EmitSignal(SignalName.FinishLevel);
 				break;
 		}
@@ -112,8 +111,8 @@ public partial class GameLevel : Control {
 		if (Level >= MultiplyRule.Rules.Length - 1) {
 			GD.Print($"TODO Finished!");
 		} else {
-			playerData.FinishLevel(Level);
-			LoadCurrentLevel(AnserMode.Choise);
+			_playerData.FinishLevel(Level);
+			LoadCurrentLevel(AnswerMode.Choise);
 		}
 	}
 

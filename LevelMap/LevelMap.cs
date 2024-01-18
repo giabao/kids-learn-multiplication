@@ -24,22 +24,21 @@ public partial class LevelMap : Control {
 		var textureRect = GetNode<TextureRect>("%TextureRect");
 		foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
 			var dx = BgWidth * (i / ButtonPositions.Length);
-			var btn = new LevelButton() {
+			var btn = new LevelButton {
 				Text = rule.Name,
 				Position = ButtonPositions[i % ButtonPositions.Length] + new Vector2(dx, 0),
 				IsCurrent = i == _playerData.Level,
 				Disabled = i > _playerData.Level,
 			};
+			btn.Pressed += Main.Audio.PlayClick;
 			btn.Pressed += () => LoadLevel(i);
 			textureRect.AddChild(btn);
 		}
 	}
 
-	private void LoadLevel(int level) {
-		var scene = ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn");
-		var gl = (GameLevel)scene.Instantiate();
+	private static void LoadLevel(int level) {
+		var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn").Instantiate();
 		gl.Level = level;
-		GetTree().Root.AddChild(gl);
-		Visible = false;
+		Main.SceneTo(gl);
 	}
 }

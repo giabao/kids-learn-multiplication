@@ -6,6 +6,8 @@ using Godot;
 namespace Kids;
 
 static class Extension {
+    public static bool IsEmpty<T>(this Stack<T> self) => self.Count == 0;
+    public static bool IsEmpty<T>(this Queue<T> self) => self.Count == 0;
     public static bool NextBool(this Random r) => r.NextDouble() >= 0.5;
 
     public static void Swap<T>(this List<T> self, int i, int j) {

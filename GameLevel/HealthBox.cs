@@ -9,6 +9,7 @@ public partial class HealthBox : VBoxContainer {
 		(Owner as GameLevel)!.HealthDown += OnHealthDown;
 	}
 	private void OnHealthDown() {
+		Main.Audio.Play("wrong.mp3");
 		var health = GetChildCount();
 		if (health == 0) return;
 		RemoveChild(GetChild(0));

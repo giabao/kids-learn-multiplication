@@ -22,7 +22,7 @@ public partial class AudioStreamManager : Node {
         _audioPathQueue.Enqueue($"res://assets/{path}");
     }
 
-    public void PlayClick() => Play("click.mp3");
+    public void PlayClick() => Play("click.wav");
 
     public override void _Process(double delta) {
         if (_playerQueue.IsEmpty() || _audioPathQueue.IsEmpty()) return;

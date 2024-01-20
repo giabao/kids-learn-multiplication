@@ -36,14 +36,11 @@ public partial class GameLevel : Control {
 
     public int Level;
 
-    [Signal]
-    public delegate void HealthDownEventHandler();
+    [Signal] public delegate void HealthDownEventHandler();
 
-    [Signal]
-    public delegate void FinishLevelEventHandler();
+    [Signal] public delegate void FinishLevelEventHandler();
 
-    [Signal]
-    public delegate void AnswerDoneEventHandler();
+    [Signal] public delegate void AnswerDoneEventHandler();
 
     public override void _Ready() {
         GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;

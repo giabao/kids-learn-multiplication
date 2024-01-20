@@ -14,7 +14,7 @@ public partial class GameLevel : Control {
     private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
     private NumPad NumPad => GetNode<NumPad>("%NumPad");
 
-    private Label EquationLabel => GetNode<Label>("%Equation/Label");
+    private EquationBox EquationBox => GetNode<EquationBox>("%EquationBox");
     private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
     private Button[] _buttons; // lateinit
 
@@ -54,7 +54,7 @@ public partial class GameLevel : Control {
         }
 
         NumPad.Submit += OnAnswer;
-        NumPad.ValueChanged += OnPadValueChanged;
+        NumPad.ValueChanged += value => EquationBox.Result.Text = value;
 
         GetNode<HealthBox>("%Health").HealthEmpty += () => {
             Main.Audio.Play("game-over.ogg");
@@ -80,7 +80,7 @@ public partial class GameLevel : Control {
         }
 
         var e = _equations[++_questionNumber];
-        EquationLabel.Text = e.Question;
+        EquationBox.TypingEffect(e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
                 var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();
@@ -94,12 +94,6 @@ public partial class GameLevel : Control {
                 NumPad.Reset();
                 break;
         }
-    }
-
-    private void OnPadValueChanged(string value) {
-        var s = EquationLabel.Text;
-        var i = s.IndexOf('=') + 2;
-        EquationLabel.Text = s[..i] + value;
     }
 
     private void OnAnswer(int answer) {

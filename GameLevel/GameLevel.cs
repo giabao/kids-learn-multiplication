@@ -46,7 +46,7 @@ public partial class GameLevel : Control {
     public delegate void AnswerDoneEventHandler();
 
     public override void _Ready() {
-        GetNode<TextureButton>("%BackBtn").Pressed += Main.Back;
+        GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;
 
         _buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
         foreach (var btn in _buttons) {

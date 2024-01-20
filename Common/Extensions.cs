@@ -49,4 +49,9 @@ static class Extension {
 
         return self.AnchorCenter();
     }
+
+    public static T WithSound<T>(this T self) where T : BaseButton {
+        self.Pressed += Main.Audio.PlayClick;
+        return self;
+    }
 }

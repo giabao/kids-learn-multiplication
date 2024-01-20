@@ -22,7 +22,7 @@ public partial class LevelMap : Control {
 
     public override void _Ready() {
         _playerData = PlayerData.Load();
-        GetNode<TextureButton>("SettingsBtn").Pressed += () => Main.ShowModal("res://Settings.tscn");
+        GetNode<TextureButton>("SettingsBtn").WithSound().Pressed += () => Main.ShowModal("res://Settings.tscn");
         var textureRect = GetNode<TextureRect>("%TextureRect");
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
             var dx = BgWidth * (i / ButtonPositions.Length);
@@ -32,8 +32,7 @@ public partial class LevelMap : Control {
                 IsCurrent = i == _playerData.Level,
                 Disabled = i > _playerData.Level,
             };
-            btn.Pressed += Main.Audio.PlayClick;
-            btn.Pressed += () => LoadLevel(i);
+            btn.WithSound().Pressed += () => LoadLevel(i);
             textureRect.AddChild(btn);
         }
     }

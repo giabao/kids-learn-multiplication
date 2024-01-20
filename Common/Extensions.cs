@@ -31,4 +31,20 @@ static class Extension {
         self.AddThemeFontSizeOverride("font_size", size);
         return self;
     }
+
+    public static T AnchorCenter<T>(this T self) where T : Control {
+        self.AnchorLeft = self.AnchorRight = self.AnchorTop = self.AnchorBottom = 0.5f;
+        self.GrowHorizontal = self.GrowVertical = Control.GrowDirection.Both;
+        return self;
+    }
+
+    public static T LayoutCenter<T>(this T self) where T : Control {
+        var (w, h) = self.Size;
+        self.OffsetLeft = -w / 2;
+        self.OffsetRight = w / 2;
+        self.OffsetTop = -h / 2;
+        self.OffsetBottom = h / 2;
+
+        return self.AnchorCenter();
+    }
 }

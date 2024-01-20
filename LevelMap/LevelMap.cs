@@ -1,8 +1,7 @@
 using Godot;
-using System;
-using System.Linq;
 
 namespace Kids.LevelMap;
+
 public partial class LevelMap : Control {
 	private const int BgWidth = 2222;
 	private static readonly Vector2[] ButtonPositions = [
@@ -21,6 +20,7 @@ public partial class LevelMap : Control {
 
 	public override void _Ready() {
 		_playerData = PlayerData.Load();
+		GetNode<TextureButton>("SettingsBtn").Pressed += () => Main.ShowModal("res://Settings.tscn");
 		var textureRect = GetNode<TextureRect>("%TextureRect");
 		foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
 			var dx = BgWidth * (i / ButtonPositions.Length);

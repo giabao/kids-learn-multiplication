@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6c44n3qq42a8"]
+
+[ext_resource type="Texture2D" uid="uid://da0poavr214j7" path="res://assets/settings/settings-bg.png" id="1_mkrrd"]
+[ext_resource type="Script" path="res://Settings.cs" id="2_6jyrq"]
+[ext_resource type="Texture2D" uid="uid://mtrgsui0wc5s" path="res://assets/settings/button-close.png" id="3_fwejg"]
+[ext_resource type="Texture2D" uid="uid://k3rahg2rsdy4" path="res://assets/settings/button-off.png" id="4_ekcpj"]
+[ext_resource type="Texture2D" uid="uid://epscsn2w3fst" path="res://assets/settings/button-on.png" id="5_ovyf7"]
+
+[node name="Settings" type="TextureRect"]
+offset_right = 737.0
+offset_bottom = 644.0
+texture = ExtResource("1_mkrrd")
+stretch_mode = 2
+script = ExtResource("2_6jyrq")
+
+[node name="Close" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 84.0
+offset_right = 733.0
+offset_bottom = 168.0
+texture_normal = ExtResource("3_fwejg")
+
+[node name="Music" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 258.0
+offset_right = 574.0
+offset_bottom = 298.0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("4_ekcpj")
+texture_pressed = ExtResource("5_ovyf7")
+
+[node name="Sound" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 317.0
+offset_right = 574.0
+offset_bottom = 357.0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("4_ekcpj")
+texture_pressed = ExtResource("5_ovyf7")
+
+[node name="Vibration" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 379.0
+offset_right = 574.0
+offset_bottom = 419.0
+toggle_mode = true
+button_pressed = true
+texture_normal = ExtResource("4_ekcpj")
+texture_pressed = ExtResource("5_ovyf7")
+
+[node name="Notification" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 440.0
+offset_right = 574.0
+offset_bottom = 480.0
+toggle_mode = true
+texture_normal = ExtResource("4_ekcpj")
+texture_pressed = ExtResource("5_ovyf7")

@@ -4,16 +4,7 @@ namespace Kids.LevelMap;
 
 [Tool]
 public partial class LevelButton : TextureButton {
-	private Label _label = new Label {
-		AnchorLeft = 0.5f,
-		AnchorRight = 0.5f,
-		AnchorTop = 0.5f,
-		AnchorBottom = 0.5f,
-		GrowHorizontal = GrowDirection.Both,
-		GrowVertical = GrowDirection.Both,
-		OffsetLeft = -3,
-		OffsetTop = -44,
-	};
+	private Label _label = new Label { OffsetLeft = -3, OffsetTop = -44}.AnchorCenter();
 	public LevelButton() {
 		TextureDisabled = ResourceLoader.Load<Texture2D>("res://assets/LevelMap/button-disable.png");
 		TextureClickMask = ResourceLoader.Load<Bitmap>("res://assets/LevelMap/button-clickmask.png");

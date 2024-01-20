@@ -5,10 +5,13 @@ namespace Kids;
 
 public partial class RuleStat : Resource {
     [Export] public int Win;
+
     [Export] public int Lose;
+
     // Without a parameterless constructor, Godot will have problems
     // creating and editing your resource via the inspector.
-    public RuleStat() : this(0, 0) { }
+    public RuleStat() : this(0, 0) {
+    }
 
     // Warn: Use primary constructor (IDE0290)
     // But we cannot use primary constructor
@@ -16,10 +19,12 @@ public partial class RuleStat : Resource {
     // at Godot.SourceGenerators/Godot.SourceGenerators.ScriptPropertyDefValGenerator/Kids.RuleStat_ScriptPropertyDefVal.generated.cs(17,35)
 
     public RuleStat(int win, int lose) {
-        Win = win; Lose = lose;
+        Win = win;
+        Lose = lose;
     }
 
     public int Done => Win + Lose;
+
     public int LosePercent => Done switch {
         0 => 80,
         1 => Lose == 1 ? 90 : 40,
@@ -28,4 +33,3 @@ public partial class RuleStat : Resource {
         _ => Math.Min(Lose * 100 / Done + 10, 100)
     };
 }
-

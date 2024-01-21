@@ -4,6 +4,7 @@ using Godot;
 namespace Kids;
 
 public partial class Main : Node {
+    public const string LevelMapName = "LevelMap";
     private static Main I;
     private static readonly Stack<Node> Scenes = [];
 
@@ -18,13 +19,17 @@ public partial class Main : Node {
         I.RemoveChild(current);
     }
 
-    public static void SceneTo(Node scene) {
+    public static void SceneTo(Node scene, string? name = null) {
         ShowPeek(visible: false);
         Scenes.Push(scene);
         I.AddChild(scene);
+        if (name != null) scene.Name = name;
     }
 
-    public static void SceneTo(string path) => SceneTo(ResourceLoader.Load<PackedScene>(path).Instantiate());
+    public static void SceneTo(string path, string? name = null) =>
+        SceneTo(ResourceLoader.Load<PackedScene>(path).Instantiate(), name);
+
+    public static T Scene<T>(string name) where T : Node => I.GetNode<T>(name);
 
     private static void ShowPeek(bool visible = true) {
         if (Scenes.IsEmpty()) return;
@@ -52,7 +57,7 @@ public partial class Main : Node {
 
     public override void _Ready() {
         AddChild(_audio);
-        SceneTo("res://LevelMap/LevelMap.tscn");
+        SceneTo("res://LevelMap/LevelMap.tscn", LevelMapName);
     }
 }
 

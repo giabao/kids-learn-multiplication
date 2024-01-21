@@ -117,8 +117,10 @@ public partial class GameLevel : Control {
         if (Level >= MultiplyRule.Rules.Length - 1) {
             GD.Print($"TODO Finished!");
         } else {
+            Main.Audio.Play("win.mp3");
+            if (Level == _playerData.Level) Main.Scene<LevelMap.LevelMap>(Main.LevelMapName).LevelScroll(1);
+            GetTree().CreateTimer(1).Timeout += Main.Back;
             _playerData.FinishLevel(Level);
-            LoadCurrentLevel(AnswerMode.Choise);
         }
     }
 

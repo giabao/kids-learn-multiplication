@@ -1,9 +1,11 @@
+using System;
 using Godot;
 
 namespace Kids.LevelMap;
 
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
+    private int _scrollPerLevel; // @onready
 
     private static readonly Vector2[] ButtonPositions = [
         new(-61, 272),
@@ -24,17 +26,25 @@ public partial class LevelMap : Control {
         _playerData = PlayerData.Load();
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed += () => Main.ShowModal("res://Settings.tscn");
         var textureRect = GetNode<TextureRect>("%TextureRect");
+        var pos = Vector2.Zero;
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
-            var dx = BgWidth * (i / ButtonPositions.Length);
+            pos = ButtonPositions[i % ButtonPositions.Length];
+            pos.X += BgWidth * (i / ButtonPositions.Length);
             var btn = new LevelButton {
                 Text = rule.Name,
-                Position = ButtonPositions[i % ButtonPositions.Length] + new Vector2(dx, 0),
+                Position = pos,
                 IsCurrent = i == _playerData.Level,
                 Disabled = i > _playerData.Level,
             };
             btn.WithSound().Pressed += () => LoadLevel(i);
             textureRect.AddChild(btn);
         }
+        _scrollPerLevel = Convert.ToInt32(pos.X / MultiplyRule.Rules.Length);
+        LevelScroll(_playerData.Level - 2);
+    }
+
+    public void LevelScroll(int level) {
+        GetNode<ScrollContainer>("ScrollContainer").ScrollHorizontal += level * _scrollPerLevel;
     }
 
     private static void LoadLevel(int level) {

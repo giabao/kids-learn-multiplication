@@ -181,7 +181,6 @@ grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_7lqyx")
 theme_override_styles/fill = SubResource("StyleBoxFlat_eladp")
 step = 1.0
-value = 50.0
 rounded = true
 fill_mode = 3
 show_percentage = false

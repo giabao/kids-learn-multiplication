@@ -66,17 +66,17 @@ public partial class GameLevel : Control {
         Mode = mode;
         _equations = Examples(_playerData, Level);
         _questionNumber = -1;
+        if (mode == AnswerMode.Choise) Progress.Value = 0;
         NextQuestion();
     }
 
     private void NextQuestion() {
-        if (_questionNumber >= _equations.Count - 1) {
-            GD.Print($"AnswerDone for level {Level} in mode {Mode}");
+        if (++_questionNumber >= _equations.Count) {
             EmitSignal(SignalName.AnswerDone);
             return;
         }
 
-        var e = _equations[++_questionNumber];
+        var e = _equations[_questionNumber];
         EquationBox.TypingEffect(e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
@@ -96,8 +96,10 @@ public partial class GameLevel : Control {
     private void OnAnswer(int answer) {
         var correct = answer == _equations[_questionNumber].Result;
         _playerData.FinishQuestion(correct, Level);
-        if (correct) NextQuestion();
-        else EmitSignal(SignalName.HealthDown);
+        if (correct) {
+            Progress.Value += Progress.MaxValue / (2 * _equations.Count);
+            NextQuestion();
+        } else EmitSignal(SignalName.HealthDown);
     }
 
     private void OnAnswerDone() {

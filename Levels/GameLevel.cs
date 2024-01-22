@@ -36,7 +36,7 @@ public partial class GameLevel : Control {
         }
     }
 
-    public int Level; // TODO private
+    private int _level;
 
     [Signal] public delegate void HealthDownEventHandler();
 
@@ -46,7 +46,7 @@ public partial class GameLevel : Control {
 
     public static GameLevel Load(int level) {
         var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://Levels/GameLevel.tscn").Instantiate();
-        gl.Level = level;
+        gl._level = level;
         return gl;
     }
 
@@ -72,7 +72,7 @@ public partial class GameLevel : Control {
 
     private void LoadCurrentLevel(AnswerMode mode) {
         Mode = mode;
-        _equations = Examples(_playerData, Level);
+        _equations = Examples(_playerData, _level);
         _questionNumber = -1;
         if (mode == AnswerMode.Choise) Progress.Value = 0;
         NextQuestion();
@@ -103,7 +103,7 @@ public partial class GameLevel : Control {
 
     private void OnAnswer(int answer) {
         var correct = answer == _equations[_questionNumber].Result;
-        _playerData.FinishQuestion(correct, Level);
+        _playerData.FinishQuestion(correct, _level);
         if (correct) {
             Progress.Value += Progress.MaxValue / (2 * _equations.Count);
             NextQuestion();
@@ -122,13 +122,13 @@ public partial class GameLevel : Control {
     }
 
     private void OnFinishLevel() {
-        if (Level >= MultiplyRule.Rules.Length - 1) {
+        if (_level >= MultiplyRule.Rules.Length - 1) {
             GD.Print($"TODO Finished!");
         } else {
             Main.Audio.Play("win.mp3");
-            if (Level == _playerData.Level) Main.Scene<LevelMap>(Main.LevelMapName).LevelScroll(1);
+            if (_level == _playerData.Level) Main.Scene<LevelMap>(Main.LevelMapName).LevelScroll(1);
             GetTree().CreateTimer(1).Timeout += Main.Back;
-            _playerData.FinishLevel(Level);
+            _playerData.FinishLevel(_level);
         }
     }
 

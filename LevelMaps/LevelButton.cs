@@ -2,8 +2,7 @@ using Godot;
 
 namespace Kids.LevelMaps;
 
-// TODO remove [Tool] and [Export]
-[Tool] public partial class LevelButton : TextureButton {
+public partial class LevelButton : TextureButton {
     private Label _label = new Label { OffsetLeft = -3, OffsetTop = -44 }.AnchorCenter();
 
     public LevelButton() {
@@ -15,7 +14,7 @@ namespace Kids.LevelMaps;
 
     private bool _isCurrent;
 
-    [Export] public bool IsCurrent {
+    public bool IsCurrent {
         get => _isCurrent;
         set {
             _isCurrent = value;
@@ -24,7 +23,7 @@ namespace Kids.LevelMaps;
         }
     }
 
-    [Export] public string Text {
+    public string Text {
         get => _label.Text;
         set => _label.Text = value;
     }

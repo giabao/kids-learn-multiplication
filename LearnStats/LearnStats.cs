@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Kids.LearnStats;
 
-public partial class StatsTable : Control {
+public partial class LearnStats : Control {
     private const string ThemeTypeLabel = "StatsLabel";
     private const string ThemeTypeButton = "StatsButton";
 

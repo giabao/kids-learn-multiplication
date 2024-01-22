@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://ejj0sb40th0b"]
 
 [ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="1_p2ytr"]
-[ext_resource type="Script" path="res://LearnStats/StatsTable.cs" id="1_wx06s"]
+[ext_resource type="Script" path="res://LearnStats/LearnStats.cs" id="1_wx06s"]
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="2_dnmth"]
 [ext_resource type="Texture2D" uid="uid://ulwq1hkieb4d" path="res://assets/sky.jpg" id="2_i41um"]
 [ext_resource type="Script" path="res://LearnStats/Info.cs" id="2_iiowu"]

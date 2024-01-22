@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Kids.LevelMaps;
+using Kids.Models;
 
-namespace Kids;
+namespace Kids.Levels;
 
 enum AnswerMode {
     Choise,
@@ -16,10 +18,10 @@ public partial class GameLevel : Control {
 
     private EquationBox EquationBox => GetNode<EquationBox>("%EquationBox");
     private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
-    private Button[] _buttons; // lateinit
+    private Button[] _buttons; // @onready
 
-    private PlayerData _playerData = PlayerData.Load();
-    private List<MulEquation> _equations; // lateinit
+    private Models.PlayerData _playerData = Models.PlayerData.Load();
+    private List<MulEquation> _equations; // @onready
     private int _questionNumber;
 
     private AnswerMode _mode = AnswerMode.Choise;
@@ -34,7 +36,7 @@ public partial class GameLevel : Control {
         }
     }
 
-    public int Level;
+    public int Level; // TODO private
 
     [Signal] public delegate void HealthDownEventHandler();
 
@@ -43,7 +45,7 @@ public partial class GameLevel : Control {
     [Signal] public delegate void AnswerDoneEventHandler();
 
     public static GameLevel Load(int level) {
-        var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn").Instantiate();
+        var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://Levels/GameLevel.tscn").Instantiate();
         gl.Level = level;
         return gl;
     }
@@ -124,7 +126,7 @@ public partial class GameLevel : Control {
             GD.Print($"TODO Finished!");
         } else {
             Main.Audio.Play("win.mp3");
-            if (Level == _playerData.Level) Main.Scene<LevelMap.LevelMap>(Main.LevelMapName).LevelScroll(1);
+            if (Level == _playerData.Level) Main.Scene<LevelMap>(Main.LevelMapName).LevelScroll(1);
             GetTree().CreateTimer(1).Timeout += Main.Back;
             _playerData.FinishLevel(Level);
         }
@@ -132,7 +134,7 @@ public partial class GameLevel : Control {
 
     private const int QuestionsPerLevel = 4;
 
-    private static List<MulEquation> Examples(PlayerData p, int level) {
+    private static List<MulEquation> Examples(Models.PlayerData p, int level) {
         if (level == 0) {
             var r0 = (CompoundRule)MultiplyRule.Rules[0];
             TakeUniques([], () => r0.RandomEquation(Rnd, true));

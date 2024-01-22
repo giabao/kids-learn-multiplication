@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://k2y62syb01i7"]
 
-[ext_resource type="Texture2D" uid="uid://crid3uhbhovbr" path="res://assets/LevelMap/LevelMap.png" id="1_nhnu1"]
-[ext_resource type="Script" path="res://LevelMap/LevelMap.cs" id="1_wjebk"]
+[ext_resource type="Texture2D" uid="uid://crid3uhbhovbr" path="res://assets/LevelMaps/LevelMap.png" id="1_nhnu1"]
+[ext_resource type="Script" path="res://LevelMaps/LevelMap.cs" id="1_wjebk"]
 [ext_resource type="Texture2D" uid="uid://c8p0r8g7fxplr" path="res://assets/settings.png" id="3_f6qmy"]
 [ext_resource type="Texture2D" uid="uid://w58hyb6ks353" path="res://assets/stats.png" id="4_rsxb1"]
 

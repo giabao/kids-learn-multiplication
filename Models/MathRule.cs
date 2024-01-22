@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kids;
+namespace Kids.Models;
 
 class Operands(int left, int right) {
     public readonly int Left = left;

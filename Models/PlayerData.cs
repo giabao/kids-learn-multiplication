@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Kids;
+namespace Kids.Models;
 
 // Map level number to RuleStat
 // Use Godot's Dictionary to support [Export]

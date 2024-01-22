@@ -1,17 +1,14 @@
 using Godot;
-using System;
 using System.Linq;
 
-namespace Kids;
+namespace Kids.Levels;
 
 public partial class NumPad : Control {
     private string value = "?";
 
-    [Signal]
-    public delegate void ValueChangedEventHandler(string value);
+    [Signal] public delegate void ValueChangedEventHandler(string value);
 
-    [Signal]
-    public delegate void SubmitEventHandler(int value);
+    [Signal] public delegate void SubmitEventHandler(int value);
 
     public override void _Ready() {
         GetNode<TextureButton>("Del").Pressed += () => {

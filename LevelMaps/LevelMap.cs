@@ -1,7 +1,9 @@
 using System;
 using Godot;
+using Kids.Levels;
+using Kids.Models;
 
-namespace Kids.LevelMap;
+namespace Kids.LevelMaps;
 
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
@@ -20,14 +22,14 @@ public partial class LevelMap : Control {
         new(1905, 300),
     ];
 
-    private PlayerData _playerData = PlayerData.Load();
+    private Models.PlayerData _playerData = Models.PlayerData.Load();
 
     public override void _Ready() {
-        _playerData = PlayerData.Load();
+        _playerData = Models.PlayerData.Load();
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
             () => Main.ShowModal("res://Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=
-            () => Main.SceneTo("res://LearnStats/LearnStats.tscn");
+            () => Main.SceneTo("res://Stats/LearnStats.tscn");
         var textureRect = GetNode<TextureRect>("%TextureRect");
         var pos = Vector2.Zero;
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bv3jjxe06d23a"
-path="res://.godot/imported/button-disable.png-f1483a4039fda6f9d0f5c72b7a5cf64d.ctex"
+path="res://.godot/imported/button-disable.png-8663d760cb85dbc18aac1f1049439502.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/LevelMap/button-disable.png"
-dest_files=["res://.godot/imported/button-disable.png-f1483a4039fda6f9d0f5c72b7a5cf64d.ctex"]
+source_file="res://assets/LevelMaps/button-disable.png"
+dest_files=["res://.godot/imported/button-disable.png-8663d760cb85dbc18aac1f1049439502.ctex"]
 
 [params]
 

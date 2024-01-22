@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-namespace Kids;
+namespace Kids.Levels;
 
 public partial class HealthBox : VBoxContainer {
     [Signal]

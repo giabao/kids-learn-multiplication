@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Kids;
+namespace Kids.Levels;
 
 public partial class EquationBox : HBoxContainer {
     private const string Op = "x"; // @onready

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://055o5mvy82lp"
-path="res://.godot/imported/button-normal.png-a6c5ec39316746bdcac248941678391f.ctex"
+path="res://.godot/imported/button-normal.png-6360f025978ad6d994090a1623c9fc50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/LevelMap/button-normal.png"
-dest_files=["res://.godot/imported/button-normal.png-a6c5ec39316746bdcac248941678391f.ctex"]
+source_file="res://assets/LevelMaps/button-normal.png"
+dest_files=["res://.godot/imported/button-normal.png-6360f025978ad6d994090a1623c9fc50.ctex"]
 
 [params]
 

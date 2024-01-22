@@ -1,20 +1,21 @@
 using Godot;
 using System.Collections.Generic;
+using Kids.Models;
 
-namespace Kids.LearnStats;
+namespace Kids.Stats;
 
 public partial class LearnStats : Control {
     private const string ThemeTypeLabel = "StatsLabel";
     private const string ThemeTypeButton = "StatsButton";
 
     private Info _info; // @onready
-    private PlayerData _playerData; // @onready
+    private Models.PlayerData _playerData; // @onready
 
     public override void _Ready() {
         GetNode<TextureButton>("BackBtn").WithSound().Pressed += Main.Back;
         _info = GetNode<Info>("Info");
         _info.Visible = false;
-        _playerData = PlayerData.Load();
+        _playerData = Models.PlayerData.Load();
         InitStatsTable();
     }
 
@@ -52,7 +53,7 @@ public partial class LearnStats : Control {
             };
 
             var level = MultiplyRule.RuleIndex(row, col);
-            RuleStat? stat = _playerData.Stats.GetValueOrDefault(level);
+            Models.RuleStat? stat = _playerData.Stats.GetValueOrDefault(level);
             StyleBox s = stat == null
                 ? theme.GetStylebox("normal", ThemeTypeLabel)
                 : new StyleBoxFlat { BgColor = CellColor(stat) };
@@ -70,7 +71,7 @@ public partial class LearnStats : Control {
     }
 
     /** @return Color from green -> yellow -> red depends on stat.LosePercent */
-    private static Color CellColor(RuleStat stat) {
+    private static Color CellColor(Models.RuleStat stat) {
         var win = 1 - stat.LosePercent / 100f;
         // square win so the color turn red faster
         // in HSV model, green -> yellow -> red correspond hue from 0.4 -> 0

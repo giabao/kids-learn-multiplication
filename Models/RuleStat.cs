@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Kids;
+namespace Kids.Models;
 
 public partial class RuleStat : Resource {
     [Export] public int Win;

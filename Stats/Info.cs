@@ -15,14 +15,14 @@ public partial class Info : VBoxContainer {
         };
     }
 
-    public void Show(int level, Models.RuleStat? stat, Vector2 pos) {
+    public void Show(int level, RuleStat? stat, Vector2 pos) {
         _level = level;
         Visible = true;
         Position = pos;
         var rule = MultiplyRule.Rules[level];
         GetNode<Label>("%Title").Text = $"Rule: {rule.Name}";
         GetNode<Label>("%Desc").Text = rule.Desc;
-        stat = stat ?? new Models.RuleStat();
+        stat = stat ?? new RuleStat();
         GetNode<Label>("%Done").Text = stat.Done.ToString();
         GetNode<Label>("%Win").Text = stat.Win.ToString();
         GetNode<Label>("%Lose").Text = stat.Lose.ToString();

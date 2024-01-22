@@ -22,10 +22,10 @@ public partial class LevelMap : Control {
         new(1905, 300),
     ];
 
-    private Models.PlayerData _playerData = Models.PlayerData.Load();
+    private PlayerData _playerData = PlayerData.Load();
 
     public override void _Ready() {
-        _playerData = Models.PlayerData.Load();
+        _playerData = PlayerData.Load();
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
             () => Main.ShowModal("res://Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=

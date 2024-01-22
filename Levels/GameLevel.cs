@@ -20,7 +20,7 @@ public partial class GameLevel : Control {
     private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
     private Button[] _buttons; // @onready
 
-    private Models.PlayerData _playerData = Models.PlayerData.Load();
+    private PlayerData _playerData = PlayerData.Load();
     private List<MulEquation> _equations; // @onready
     private int _questionNumber;
 
@@ -134,7 +134,7 @@ public partial class GameLevel : Control {
 
     private const int QuestionsPerLevel = 4;
 
-    private static List<MulEquation> Examples(Models.PlayerData p, int level) {
+    private static List<MulEquation> Examples(PlayerData p, int level) {
         if (level == 0) {
             var r0 = (CompoundRule)MultiplyRule.Rules[0];
             TakeUniques([], () => r0.RandomEquation(Rnd, true));

@@ -1,32 +1,36 @@
 using Godot;
 using System.Collections.Generic;
-using Kids.LearnStats;
 
-namespace Kids;
+namespace Kids.LearnStats;
 
-public partial class StatsTable : GridContainer {
-    private Info _info; // lateinit
-
+public partial class StatsTable : Control {
     private const string ThemeTypeLabel = "StatsLabel";
     private const string ThemeTypeButton = "StatsButton";
-    private PlayerData playerData; // lateinit
+
+    private Info _info; // @onready
+    private PlayerData _playerData; // @onready
 
     public override void _Ready() {
-        _info = GetNode<Info>("%Info");
+        GetNode<TextureButton>("BackBtn").WithSound().Pressed += Main.Back;
+        _info = GetNode<Info>("Info");
         _info.Visible = false;
-        playerData = PlayerData.Load();
+        _playerData = PlayerData.Load();
+        InitStatsTable();
+    }
 
+    private void InitStatsTable() {
+        var tbl = GetNode<GridContainer>("StatsTable");
         Theme theme = ResourceLoader.Load<Theme>("res://theme.tres");
         var size = new Vector2(70, 70);
 
         for (var i = 0; i <= 10; i++) {
-            AddChild(CellLabel(i));
+            tbl.AddChild(CellLabel(i));
         }
 
         for (var i = 0; i <= 10; i++) {
-            AddChild(CellLabel(i));
+            tbl.AddChild(CellLabel(i));
             for (var j = 0; j <= 10; j++) {
-                AddChild(CellButton(i * j, i, j));
+                tbl.AddChild(CellButton(i * j, i, j));
             }
         }
 
@@ -48,7 +52,7 @@ public partial class StatsTable : GridContainer {
             };
 
             var level = MultiplyRule.RuleIndex(row, col);
-            RuleStat? stat = playerData.Stats.GetValueOrDefault(level);
+            RuleStat? stat = _playerData.Stats.GetValueOrDefault(level);
             StyleBox s = stat == null
                 ? theme.GetStylebox("normal", ThemeTypeLabel)
                 : new StyleBoxFlat { BgColor = CellColor(stat) };
@@ -65,5 +69,12 @@ public partial class StatsTable : GridContainer {
         }
     }
 
-    private static Color CellColor(RuleStat stat) => Color.FromHsv(stat.LosePercent / 100f * 0.4f, 1, 1);
+    /** @return Color from green -> yellow -> red depends on stat.LosePercent */
+    private static Color CellColor(RuleStat stat) {
+        var win = 1 - stat.LosePercent / 100f;
+        // square win so the color turn red faster
+        // in HSV model, green -> yellow -> red correspond hue from 0.4 -> 0
+        var hue = win * win * 0.4f;
+        return Color.FromHsv(hue, 1, 1);
+    }
 }

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://ejj0sb40th0b"]
+[gd_scene load_steps=10 format=3 uid="uid://ejj0sb40th0b"]
 
+[ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="1_p2ytr"]
 [ext_resource type="Script" path="res://LearnStats/StatsTable.cs" id="1_wx06s"]
+[ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="2_dnmth"]
 [ext_resource type="Texture2D" uid="uid://ulwq1hkieb4d" path="res://assets/sky.jpg" id="2_i41um"]
 [ext_resource type="Script" path="res://LearnStats/Info.cs" id="2_iiowu"]
 [ext_resource type="Texture2D" uid="uid://cfb0tmj4e6nst" path="res://assets/close.png" id="3_gma3b"]
-[ext_resource type="Texture2D" uid="uid://c2jhhvfr76da3" path="res://assets/home-circle.png" id="5_8ccil"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwh2j"]
 bg_color = Color(0.964706, 0.964706, 0.964706, 1)
@@ -15,6 +16,15 @@ border_width_bottom = 2
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cqcf"]
 bg_color = Color(0.756863, 0.756863, 0.756863, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_scjgn"]
+bg_color = Color(0.243137, 0.643137, 0.807843, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_size = 5
+shadow_offset = Vector2(-2, 5)
+
 [node name="LearnStats" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -22,14 +32,25 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wx06s")
 
-[node name="Home" type="TextureButton" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dnmth")
+
+[node name="BackBtn" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 68.0
-offset_bottom = 68.0
-texture_normal = ExtResource("5_8ccil")
+offset_left = 59.0
+offset_top = 46.0
+offset_right = 107.0
+offset_bottom = 94.0
+texture_normal = ExtResource("1_p2ytr")
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -56,14 +77,12 @@ offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 12
-script = ExtResource("1_wx06s")
 
 [node name="Control" type="Control" parent="StatsTable"]
 custom_minimum_size = Vector2(70, 70)
 layout_mode = 2
 
 [node name="Info" type="VBoxContainer" parent="."]
-unique_name_in_owner = true
 layout_mode = 0
 offset_left = 500.0
 offset_right = 1040.0
@@ -113,80 +132,101 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_iwh2j")
 [node name="Desc" type="Label" parent="Info/Content"]
 unique_name_in_owner = true
 layout_mode = 0
+offset_top = 4.0
 offset_right = 540.0
-offset_bottom = 66.0
+offset_bottom = 79.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
-text = "Bất kỳ số nào nhân với 0 cũng bằng 0"
+text = "Bất kỳ số nào nhân với 1 cũng bằng chính số đó"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Info/Content"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -270.0
-offset_top = -125.0
-offset_right = 270.0
-offset_bottom = 125.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 66
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Panel" type="Panel" parent="Info/Content/MarginContainer"]
+[node name="Panel" type="Panel" parent="Info/Content"]
 layout_mode = 2
+offset_left = 20.0
+offset_top = 82.0
+offset_right = 520.0
+offset_bottom = 150.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_5cqcf")
 
-[node name="GridContainer" type="GridContainer" parent="Info/Content/MarginContainer"]
+[node name="Label1" type="Label" parent="Info/Content/Panel"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-columns = 2
-
-[node name="Label1" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
-layout_mode = 2
+offset_left = 349.0
+offset_top = 16.0
+offset_right = 423.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
 text = "Done:"
 
-[node name="Done" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+[node name="Done" type="Label" parent="Info/Content/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 433.0
+offset_top = 16.0
+offset_right = 448.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
 text = "6"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+[node name="Label2" type="Label" parent="Info/Content/Panel"]
 layout_mode = 2
+offset_left = 59.0
+offset_top = 16.0
+offset_right = 115.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 theme_override_font_sizes/font_size = 26
 text = "Win:"
 
-[node name="Win" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+[node name="Win" type="Label" parent="Info/Content/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 126.0
+offset_top = 16.0
+offset_right = 141.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(0, 0, 1, 1)
 theme_override_font_sizes/font_size = 26
 text = "4"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+[node name="Label3" type="Label" parent="Info/Content/Panel"]
 layout_mode = 2
+offset_left = 200.0
+offset_top = 16.0
+offset_right = 265.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
 text = "Lose:"
 
-[node name="Lose" type="Label" parent="Info/Content/MarginContainer/GridContainer"]
+[node name="Lose" type="Label" parent="Info/Content/Panel"]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 277.0
+offset_top = 16.0
+offset_right = 292.0
+offset_bottom = 52.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
 text = "2"
 horizontal_alignment = 1
+
+[node name="LearnBtn" type="Button" parent="Info/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 214.0
+offset_top = 170.0
+offset_right = 329.0
+offset_bottom = 222.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_scjgn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_scjgn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_scjgn")
+text = "Learn"
+icon_alignment = 2

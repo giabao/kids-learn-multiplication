@@ -3,11 +3,18 @@ using Godot;
 namespace Kids.LearnStats;
 
 public partial class Info : VBoxContainer {
+    private int _level;
+
     public override void _Ready() {
-        GetNode<TextureButton>("%Close").Pressed += () => Visible = false;
+        GetNode<TextureButton>("%Close").WithSound().Pressed += Hide;
+        GetNode<Button>("%LearnBtn").WithSound().Pressed += () => {
+            Main.Back();
+            Main.SceneTo(GameLevel.Load(_level));
+        };
     }
 
     public void Show(int level, RuleStat? stat, Vector2 pos) {
+        _level = level;
         Visible = true;
         Position = pos;
         var rule = MultiplyRule.Rules[level];

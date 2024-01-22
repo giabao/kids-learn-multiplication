@@ -42,6 +42,12 @@ public partial class GameLevel : Control {
 
     [Signal] public delegate void AnswerDoneEventHandler();
 
+    public static GameLevel Load(int level) {
+        var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn").Instantiate();
+        gl.Level = level;
+        return gl;
+    }
+
     public override void _Ready() {
         GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;
 

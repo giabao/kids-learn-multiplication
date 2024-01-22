@@ -24,7 +24,10 @@ public partial class LevelMap : Control {
 
     public override void _Ready() {
         _playerData = PlayerData.Load();
-        GetNode<TextureButton>("SettingsBtn").WithSound().Pressed += () => Main.ShowModal("res://Settings.tscn");
+        GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
+            () => Main.ShowModal("res://Settings.tscn");
+        GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=
+            () => Main.SceneTo("res://LearnStats/LearnStats.tscn");
         var textureRect = GetNode<TextureRect>("%TextureRect");
         var pos = Vector2.Zero;
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
@@ -36,20 +39,15 @@ public partial class LevelMap : Control {
                 IsCurrent = i == _playerData.Level,
                 Disabled = i > _playerData.Level,
             };
-            btn.WithSound().Pressed += () => LoadLevel(i);
+            btn.WithSound().Pressed += () => Main.SceneTo(GameLevel.Load(i));
             textureRect.AddChild(btn);
         }
+
         _scrollPerLevel = Convert.ToInt32(pos.X / MultiplyRule.Rules.Length);
         LevelScroll(_playerData.Level - 2);
     }
 
     public void LevelScroll(int level) {
         GetNode<ScrollContainer>("ScrollContainer").ScrollHorizontal += level * _scrollPerLevel;
-    }
-
-    private static void LoadLevel(int level) {
-        var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://GameLevel/GameLevel.tscn").Instantiate();
-        gl.Level = level;
-        Main.SceneTo(gl);
     }
 }

@@ -19,7 +19,8 @@ public partial class Main : Node {
         I.RemoveChild(current);
     }
 
-    public static void SceneTo(Node scene, string? name = null) {
+    public static void SceneTo(Node scene, string? name = null, bool replace = false) {
+        if (replace) Back();
         ShowPeek(visible: false);
         Scenes.Push(scene);
         I.AddChild(scene);

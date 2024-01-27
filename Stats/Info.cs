@@ -14,10 +14,8 @@ public partial class Info : VBoxContainer {
 
     public override void _Ready() {
         GetNode<TextureButton>("%Close").WithSound().Pressed += Hide;
-        GetNode<Button>("%LearnBtn").WithSound().Pressed += () => {
-            Main.Back();
-            Main.SceneTo(GameLevel.Load(_level));
-        };
+        GetNode<Button>("%LearnBtn").WithSound().Pressed +=
+            () => Main.SceneTo(GameLevel.Load(_level), replace: true);
     }
 
     public void Show(int level, RuleStat? stat, Vector2 pos) {

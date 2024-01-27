@@ -54,4 +54,24 @@ static class Extension {
         self.Pressed += Main.Audio.PlayClick;
         return self;
     }
+
+    public static void TypingEffect<TC>(this TC c, Action<string> setText, string text, double speed = 0.1,
+        bool playClick = true)
+        where TC : Control {
+        setText("");
+        if (text == "") return;
+        var i = 0;
+        var timer = new Timer { WaitTime = speed / text.Length, Autostart = true };
+        c.AddChild(timer);
+        timer.Timeout += () => {
+            if (playClick) Main.Audio.PlayClick();
+            setText(text[..++i]);
+            if (i < text.Length) return;
+            timer.Stop();
+            c.RemoveChild(timer);
+        };
+    }
+
+    public static void TypingEffect(this Label c, string text, double speed = 0.1, bool playClick = true) =>
+        TypingEffect(c, txt => c.Text = txt, text, speed, playClick);
 }

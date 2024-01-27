@@ -12,7 +12,7 @@ enum AnswerMode {
     NumPad
 }
 
-public partial class GameLevel : Control {
+public partial class GameLevel : TextureRect {
     private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
     private NumPad NumPad => GetNode<NumPad>("%NumPad");
 
@@ -85,7 +85,7 @@ public partial class GameLevel : Control {
         }
 
         var e = _equations[_questionNumber];
-        EquationBox.TypingEffect(e.Question);
+        EquationBox.TypingEffect(EquationBox.SetText, e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
                 var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();

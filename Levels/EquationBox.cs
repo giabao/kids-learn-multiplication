@@ -20,43 +20,26 @@ public partial class EquationBox : HBoxContainer {
         Result = GetNode<Label>("Result");
     }
 
-    public void TypingEffect(string text) {
-        Text = "";
-        if (text == "") return;
-        var i = 0;
-        var timer = new Timer { WaitTime = 0.1, Autostart = true };
-        AddChild(timer);
-        timer.Timeout += () => {
-            Main.Audio.PlayClick();
-            Text = text[..++i];
-            if (i < text.Length) return;
-            timer.Stop();
-            RemoveChild(timer);
-        };
-    }
-
-    private string Text {
-        set {
-            var i = value == "" ? -1 : value.IndexOf(Op, 1, StringComparison.Ordinal);
-            if (i == -1) {
-                _left.Text = value;
-                _op.Text = _right.Text = _equal.Text = Result.Text = "";
-                return;
-            }
-
-            _left.Text = value[..i];
-            _op.Text = Op;
-            i += Op.Length;
-            var j = i >= value.Length ? -1 : value.IndexOf('=', i);
-            if (j == -1) {
-                _right.Text = value[i..];
-                _equal.Text = Result.Text = "";
-                return;
-            }
-
-            _right.Text = value[i..j];
-            _equal.Text = "=";
-            Result.Text = value[(j + 1)..];
+    public void SetText(string value) {
+        var i = value == "" ? -1 : value.IndexOf(Op, 1, StringComparison.Ordinal);
+        if (i == -1) {
+            _left.Text = value;
+            _op.Text = _right.Text = _equal.Text = Result.Text = "";
+            return;
         }
+
+        _left.Text = value[..i];
+        _op.Text = Op;
+        i += Op.Length;
+        var j = i >= value.Length ? -1 : value.IndexOf('=', i);
+        if (j == -1) {
+            _right.Text = value[i..];
+            _equal.Text = Result.Text = "";
+            return;
+        }
+
+        _right.Text = value[i..j];
+        _equal.Text = "=";
+        Result.Text = value[(j + 1)..];
     }
 }

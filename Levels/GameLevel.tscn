@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="1_6ew35"]
 [ext_resource type="Script" path="res://Levels/GameLevel.cs" id="2_jxx6d"]
 [ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="3_qlf87"]
+[ext_resource type="PackedScene" uid="uid://ct6xu5jeht1hc" path="res://Levels/EquationBox.tscn" id="5_jlxt1"]
 [ext_resource type="Script" path="res://Levels/HealthBox.cs" id="5_l15e5"]
 [ext_resource type="Texture2D" uid="uid://wcinwsuylgr6" path="res://assets/red-heart.png" id="5_qq0tq"]
-[ext_resource type="Script" path="res://Levels/EquationBox.cs" id="5_xw3tl"]
 [ext_resource type="Theme" uid="uid://qsr4slii6rq7" path="res://theme.tres" id="6_vgxbh"]
 [ext_resource type="Texture2D" uid="uid://bpatwsvdv66hu" path="res://assets/del.png" id="7_3g33j"]
 [ext_resource type="Script" path="res://Levels/NumPad.cs" id="7_7g7r3"]
@@ -58,47 +58,66 @@ bg_color = Color(0.498039, 0.705882, 0.760784, 1)
 bg_color = Color(0.498039, 0.705882, 0.760784, 1)
 corner_radius_top_right = 20
 
-[node name="GameLevel" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("2_jxx6d")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
+[node name="GameLevel" type="TextureRect"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_6ew35")
+script = ExtResource("2_jxx6d")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -470.0
+offset_right = 480.0
+offset_bottom = 470.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="CenterContainer"]
-custom_minimum_size = Vector2(960, 960)
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Control"]
+[node name="BackBtn" type="TextureButton" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
-offset_right = 960.0
-offset_bottom = 960.0
-theme_override_constants/margin_top = 80
-theme_override_constants/margin_bottom = 5
+offset_left = -5.0
+offset_top = 5.0
+offset_right = 43.0
+offset_bottom = 53.0
+texture_normal = ExtResource("3_qlf87")
+stretch_mode = 4
 
-[node name="WorkingArea" type="Control" parent="CenterContainer/Control/MarginContainer"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_right = 65.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.737255, 0.137255, 0.172549, 1)
+theme_override_font_sizes/font_size = 38
+text = "Multiply"
 
-[node name="Control" type="Control" parent="CenterContainer/Control/MarginContainer/WorkingArea"]
+[node name="PlayingArea" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -875.0
+offset_right = 480.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="Control/PlayingArea"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -108,7 +127,7 @@ offset_right = 480.0
 offset_bottom = 500.0
 grow_horizontal = 2
 
-[node name="Health" type="VBoxContainer" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control"]
+[node name="Health" type="VBoxContainer" parent="Control/PlayingArea/Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 2
@@ -120,19 +139,19 @@ grow_vertical = 0
 alignment = 2
 script = ExtResource("5_l15e5")
 
-[node name="heart1" type="TextureRect" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/Health"]
+[node name="heart1" type="TextureRect" parent="Control/PlayingArea/Control/Health"]
 layout_mode = 2
 texture = ExtResource("5_qq0tq")
 
-[node name="heart2" type="TextureRect" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/Health"]
+[node name="heart2" type="TextureRect" parent="Control/PlayingArea/Control/Health"]
 layout_mode = 2
 texture = ExtResource("5_qq0tq")
 
-[node name="heart3" type="TextureRect" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/Health"]
+[node name="heart3" type="TextureRect" parent="Control/PlayingArea/Control/Health"]
 layout_mode = 2
 texture = ExtResource("5_qq0tq")
 
-[node name="EquationBox" type="HBoxContainer" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control"]
+[node name="EquationBox" parent="Control/PlayingArea/Control" instance=ExtResource("5_jlxt1")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -140,44 +159,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -250.0
-offset_bottom = 250.0
+offset_left = -139.0
+offset_top = -55.0
+offset_right = 139.0
+offset_bottom = 55.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
-script = ExtResource("5_xw3tl")
 
-[node name="Left" type="Label" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/EquationBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "3"
-
-[node name="Op" type="Label" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/EquationBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "x"
-
-[node name="Right" type="Label" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/EquationBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "2"
-
-[node name="Equal" type="Label" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/EquationBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "="
-
-[node name="Result" type="Label" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control/EquationBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 80
-text = "?"
-
-[node name="Progress" type="ProgressBar" parent="CenterContainer/Control/MarginContainer/WorkingArea/Control"]
+[node name="Progress" type="ProgressBar" parent="Control/PlayingArea/Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
@@ -196,7 +185,7 @@ rounded = true
 fill_mode = 3
 show_percentage = false
 
-[node name="ButtonsGrid" type="GridContainer" parent="CenterContainer/Control/MarginContainer/WorkingArea"]
+[node name="ButtonsGrid" type="GridContainer" parent="Control/PlayingArea"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
@@ -213,35 +202,35 @@ theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="Button1" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/ButtonsGrid"]
+[node name="Button1" type="Button" parent="Control/PlayingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
 theme = ExtResource("6_vgxbh")
 theme_type_variation = &"ChoiseButton"
 text = "6"
 
-[node name="Button2" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/ButtonsGrid"]
+[node name="Button2" type="Button" parent="Control/PlayingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
 theme = ExtResource("6_vgxbh")
 theme_type_variation = &"ChoiseButton"
 text = "3"
 
-[node name="Button3" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/ButtonsGrid"]
+[node name="Button3" type="Button" parent="Control/PlayingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
 theme = ExtResource("6_vgxbh")
 theme_type_variation = &"ChoiseButton"
 text = "11"
 
-[node name="Button4" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/ButtonsGrid"]
+[node name="Button4" type="Button" parent="Control/PlayingArea/ButtonsGrid"]
 custom_minimum_size = Vector2(260, 130)
 layout_mode = 2
 theme = ExtResource("6_vgxbh")
 theme_type_variation = &"ChoiseButton"
 text = "7"
 
-[node name="NumPad" type="Control" parent="CenterContainer/Control/MarginContainer/WorkingArea"]
+[node name="NumPad" type="Control" parent="Control/PlayingArea"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -257,7 +246,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("7_7g7r3")
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad"]
+[node name="GridContainer" type="GridContainer" parent="Control/PlayingArea/NumPad"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -272,7 +261,7 @@ theme_override_constants/h_separation = 30
 theme_override_constants/v_separation = 30
 columns = 5
 
-[node name="Button1" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button1" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -282,7 +271,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_s80s7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_1bwx4")
 text = "1"
 
-[node name="Button2" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button2" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -292,7 +281,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "2"
 
-[node name="Button3" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button3" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -302,7 +291,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "3"
 
-[node name="Button4" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button4" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -312,7 +301,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "4"
 
-[node name="Button5" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button5" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -322,7 +311,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_ndqhx")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ndqhx")
 text = "5"
 
-[node name="Button6" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button6" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -332,7 +321,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "6"
 
-[node name="Button7" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button7" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -342,7 +331,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "7"
 
-[node name="Button8" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button8" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -352,7 +341,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "8"
 
-[node name="Button9" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button9" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -362,7 +351,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "9"
 
-[node name="Button0" type="Button" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad/GridContainer"]
+[node name="Button0" type="Button" parent="Control/PlayingArea/NumPad/GridContainer"]
 custom_minimum_size = Vector2(110, 90)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -372,7 +361,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_xtvvo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_dv2fx")
 text = "0"
 
-[node name="Del" type="TextureButton" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad"]
+[node name="Del" type="TextureButton" parent="Control/PlayingArea/NumPad"]
 layout_mode = 2
 offset_left = 65.0
 offset_top = 241.0
@@ -386,7 +375,7 @@ texture_pressed = ExtResource("7_3g33j")
 texture_hover = ExtResource("7_3g33j")
 stretch_mode = 4
 
-[node name="Enter" type="TextureButton" parent="CenterContainer/Control/MarginContainer/WorkingArea/NumPad"]
+[node name="Enter" type="TextureButton" parent="Control/PlayingArea/NumPad"]
 layout_mode = 0
 offset_left = 352.0
 offset_top = 241.0
@@ -396,25 +385,3 @@ scale = Vector2(0.8, 0.8)
 texture_normal = ExtResource("8_5g4l6")
 texture_pressed = ExtResource("8_5g4l6")
 texture_hover = ExtResource("8_5g4l6")
-
-[node name="Label" type="Label" parent="CenterContainer/Control"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -32.0
-offset_right = 32.0
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 33
-text = "Multiply"
-
-[node name="BackBtn" type="TextureButton" parent="CenterContainer/Control"]
-unique_name_in_owner = true
-layout_mode = 1
-offset_left = -5.0
-offset_top = 5.0
-offset_right = 43.0
-offset_bottom = 53.0
-texture_normal = ExtResource("3_qlf87")
-stretch_mode = 4

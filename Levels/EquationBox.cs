@@ -4,21 +4,13 @@ using Godot;
 namespace Kids.Levels;
 
 public partial class EquationBox : HBoxContainer {
-    private const string Op = "x"; // @onready
+    private const string Op = "x";
 
-    private Label _left; // @onready
-    private Label _op; // @onready
-    private Label _right; // @onready
-    private Label _equal; // @onready
-    public Label Result; // @onready
-
-    public override void _Ready() {
-        _left = GetNode<Label>("Left");
-        _op = GetNode<Label>("Op");
-        _right = GetNode<Label>("Right");
-        _equal = GetNode<Label>("Equal");
-        Result = GetNode<Label>("Result");
-    }
+    [OnReady] private Label _left;
+    [OnReady] private Label _op;
+    [OnReady] private Label _right;
+    [OnReady] private Label _equal;
+    [OnReady] public Label Result;
 
     public void SetText(string value) {
         var i = value == "" ? -1 : value.IndexOf(Op, 1, StringComparison.Ordinal);

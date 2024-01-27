@@ -3,8 +3,7 @@ using Godot;
 namespace Kids.Levels;
 
 public partial class HealthBox : VBoxContainer {
-    [Signal]
-    public delegate void HealthEmptyEventHandler();
+    [Signal] public delegate void HealthEmptyEventHandler();
 
     public override void _Ready() {
         (Owner as GameLevel)!.HealthDown += OnHealthDown;

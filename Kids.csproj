@@ -6,7 +6,6 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>Kids</RootNamespace>
     <Nullable>enable</Nullable>
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\GodotOnReady\GodotOnReady.csproj"

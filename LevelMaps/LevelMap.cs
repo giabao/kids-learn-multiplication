@@ -7,6 +7,7 @@ namespace Kids.LevelMaps;
 
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
+    [OnReady] private ScrollContainer _scrollContainer;
     private int _scrollPerLevel; // @onready
 
     private static readonly Vector2[] ButtonPositions = [
@@ -25,7 +26,6 @@ public partial class LevelMap : Control {
     private PlayerData _playerData = PlayerData.Load();
 
     public override void _Ready() {
-        _playerData = PlayerData.Load();
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
             () => Main.ShowModal("res://Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=
@@ -49,7 +49,5 @@ public partial class LevelMap : Control {
         LevelScroll(_playerData.Level - 2);
     }
 
-    public void LevelScroll(int level) {
-        GetNode<ScrollContainer>("ScrollContainer").ScrollHorizontal += level * _scrollPerLevel;
-    }
+    public void LevelScroll(int level) => _scrollContainer.ScrollHorizontal += level * _scrollPerLevel;
 }

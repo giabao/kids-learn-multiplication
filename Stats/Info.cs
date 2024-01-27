@@ -5,6 +5,11 @@ using Kids.Models;
 namespace Kids.Stats;
 
 public partial class Info : VBoxContainer {
+    [OnReady("%")] private Label _title;
+    [OnReady("%")] private Label _desc;
+    [OnReady("%")] private Label _done;
+    [OnReady("%")] private Label _win;
+    [OnReady("%")] private Label _lose;
     private int _level;
 
     public override void _Ready() {
@@ -20,11 +25,11 @@ public partial class Info : VBoxContainer {
         Visible = true;
         Position = pos;
         var rule = MultiplyRule.Rules[level];
-        GetNode<Label>("%Title").Text = $"Rule: {rule.Name}";
-        GetNode<Label>("%Desc").Text = rule.Desc;
-        stat = stat ?? new RuleStat();
-        GetNode<Label>("%Done").Text = stat.Done.ToString();
-        GetNode<Label>("%Win").Text = stat.Win.ToString();
-        GetNode<Label>("%Lose").Text = stat.Lose.ToString();
+        _title.Text = $"Rule: {rule.Name}";
+        _desc.Text = rule.Desc;
+        stat ??= new RuleStat();
+        _done.Text = stat.Done.ToString();
+        _win.Text = stat.Win.ToString();
+        _lose.Text = stat.Lose.ToString();
     }
 }

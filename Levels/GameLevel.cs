@@ -13,11 +13,10 @@ enum AnswerMode {
 }
 
 public partial class GameLevel : TextureRect {
-    private GridContainer ButtonsGrid => GetNode<GridContainer>("%ButtonsGrid");
-    private NumPad NumPad => GetNode<NumPad>("%NumPad");
-
-    private EquationBox EquationBox => GetNode<EquationBox>("%EquationBox");
-    private ProgressBar Progress => GetNode<ProgressBar>("%Progress");
+    [OnReady("%")] private GridContainer _buttonsGrid;
+    [OnReady("%")] private NumPad _numPad;
+    [OnReady("%")] private EquationBox _equationBox;
+    [OnReady("%")] private ProgressBar _progress;
     private Button[] _buttons; // @onready
 
     private PlayerData _playerData = PlayerData.Load();
@@ -31,8 +30,8 @@ public partial class GameLevel : TextureRect {
         set {
             if (_mode == value) return;
             _mode = value;
-            ButtonsGrid.Visible = _mode == AnswerMode.Choise;
-            NumPad.Visible = _mode == AnswerMode.NumPad;
+            _buttonsGrid.Visible = _mode == AnswerMode.Choise;
+            _numPad.Visible = _mode == AnswerMode.NumPad;
         }
     }
 
@@ -53,13 +52,13 @@ public partial class GameLevel : TextureRect {
     public override void _Ready() {
         GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;
 
-        _buttons = ButtonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
+        _buttons = _buttonsGrid.GetChildren().Where(b => b is Button).Cast<Button>().ToArray();
         foreach (var btn in _buttons) {
             btn.Pressed += () => OnAnswer(btn.Text.Trim().ToInt());
         }
 
-        NumPad.Submit += OnAnswer;
-        NumPad.ValueChanged += value => EquationBox.Result.Text = value;
+        _numPad.Submit += OnAnswer;
+        _numPad.ValueChanged += value => _equationBox.Result.Text = value;
 
         GetNode<HealthBox>("%Health").HealthEmpty += () => {
             Main.Audio.Play("game-over.ogg");
@@ -74,7 +73,7 @@ public partial class GameLevel : TextureRect {
         Mode = mode;
         _equations = Examples(_playerData, _level);
         _questionNumber = -1;
-        if (mode == AnswerMode.Choise) Progress.Value = 0;
+        if (mode == AnswerMode.Choise) _progress.Value = 0;
         NextQuestion();
     }
 
@@ -85,7 +84,7 @@ public partial class GameLevel : TextureRect {
         }
 
         var e = _equations[_questionNumber];
-        EquationBox.TypingEffect(EquationBox.SetText, e.Question);
+        _equationBox.TypingEffect(_equationBox.SetText, e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
                 var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();
@@ -96,7 +95,7 @@ public partial class GameLevel : TextureRect {
 
                 break;
             case AnswerMode.NumPad:
-                NumPad.Reset();
+                _numPad.Reset();
                 break;
         }
     }
@@ -105,7 +104,7 @@ public partial class GameLevel : TextureRect {
         var correct = answer == _equations[_questionNumber].Result;
         _playerData.FinishQuestion(correct, _level);
         if (correct) {
-            Progress.Value += Progress.MaxValue / (2 * _equations.Count);
+            _progress.Value += _progress.MaxValue / (2 * _equations.Count);
             NextQuestion();
         } else EmitSignal(SignalName.HealthDown);
     }

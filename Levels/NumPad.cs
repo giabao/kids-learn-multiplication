@@ -12,11 +12,10 @@ public partial class NumPad : Control {
 
     public override void _Ready() {
         GetNode<TextureButton>("Del").Pressed += () => {
-            if (value != "?") {
-                value = value[..^1];
-                if (value == "") value = "?";
-                EmitSignal(SignalName.ValueChanged, value);
-            }
+            if (value == "?") return;
+            value = value[..^1];
+            if (value == "") value = "?";
+            EmitSignal(SignalName.ValueChanged, value);
         };
         GetNode<TextureButton>("Enter").Pressed += () => {
             if (value != "?") {

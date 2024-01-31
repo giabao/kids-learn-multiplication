@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ejj0sb40th0b"]
+[gd_scene load_steps=11 format=3 uid="uid://ejj0sb40th0b"]
 
 [ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="1_p2ytr"]
 [ext_resource type="Script" path="res://Stats/LearnStats.cs" id="1_wx06s"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ulwq1hkieb4d" path="res://assets/sky.jpg" id="2_i41um"]
 [ext_resource type="Script" path="res://Stats/Info.cs" id="2_iiowu"]
 [ext_resource type="Texture2D" uid="uid://cfb0tmj4e6nst" path="res://assets/close.png" id="3_gma3b"]
+[ext_resource type="Texture2D" uid="uid://cjsyd8x0abvp5" path="res://assets/play.png" id="7_fwnok"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwh2j"]
 bg_color = Color(0.964706, 0.964706, 0.964706, 1)
@@ -221,12 +222,16 @@ unique_name_in_owner = true
 layout_mode = 2
 offset_left = 214.0
 offset_top = 170.0
-offset_right = 329.0
+offset_right = 354.0
 offset_bottom = 222.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/h_separation = 0
+theme_override_constants/icon_max_width = 44
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_scjgn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_scjgn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_scjgn")
 text = "Learn"
+icon = ExtResource("7_fwnok")
 icon_alignment = 2
+expand_icon = true

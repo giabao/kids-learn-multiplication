@@ -5,7 +5,7 @@ namespace Kids;
 
 public partial class Main : Node {
     public const string LevelMapName = "LevelMap";
-    private static Main I;
+    private static Main I = null!;
     private static readonly Stack<Node> Scenes = [];
 
     public Main() {

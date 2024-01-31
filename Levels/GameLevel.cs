@@ -13,14 +13,13 @@ enum AnswerMode {
 }
 
 public partial class GameLevel : TextureRect {
-    [OnReady("%")] private GridContainer _buttonsGrid;
-    [OnReady("%")] private NumPad _numPad;
-    [OnReady("%")] private EquationBox _equationBox;
-    [OnReady("%")] private ProgressBar _progress;
-    private Button[] _buttons; // @onready
-
+    [GetNode("%")] private GridContainer _buttonsGrid = null!;
+    [GetNode("%")] private NumPad _numPad = null!;
+    [GetNode("%")] private EquationBox _equationBox = null!;
+    [GetNode("%")] private ProgressBar _progress = null!;
+    private Button[] _buttons = null!; // @onready
+    private List<MulEquation> _equations = null!; // @onready
     private PlayerData _playerData = PlayerData.Load();
-    private List<MulEquation> _equations; // @onready
     private int _questionNumber;
 
     private AnswerMode _mode = AnswerMode.Choise;
@@ -44,9 +43,9 @@ public partial class GameLevel : TextureRect {
     [Signal] public delegate void AnswerDoneEventHandler();
 
     public static GameLevel Load(int level) {
-        var gl = (GameLevel)ResourceLoader.Load<PackedScene>("res://Levels/GameLevel.tscn").Instantiate();
-        gl._level = level;
-        return gl;
+        var ret = (GameLevel)ResourceLoader.Load<PackedScene>("res://Levels/GameLevel.tscn").Instantiate();
+        ret._level = level;
+        return ret;
     }
 
     public override void _Ready() {
@@ -84,7 +83,7 @@ public partial class GameLevel : TextureRect {
         }
 
         var e = _equations[_questionNumber];
-        _equationBox.TypingEffect(_equationBox.SetText, e.Question);
+        _equationBox.TypingEffect(e.Question, playClick: true);
         switch (Mode) {
             case AnswerMode.Choise:
                 var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();

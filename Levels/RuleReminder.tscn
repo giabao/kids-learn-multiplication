@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8m8ul6v8mqkg"]
+
+[ext_resource type="Script" path="res://Levels/RuleReminder.cs" id="1_lbltn"]
+[ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="1_v52x7"]
+[ext_resource type="Texture2D" uid="uid://cjsyd8x0abvp5" path="res://assets/play.png" id="2_xsjdb"]
+[ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="3_wujnc"]
+
+[node name="RuleReminder" type="TextureRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_v52x7")
+script = ExtResource("1_lbltn")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -470.0
+offset_right = 480.0
+offset_bottom = 470.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackBtn" type="TextureButton" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = -5.0
+offset_top = 5.0
+offset_right = 43.0
+offset_bottom = 53.0
+texture_normal = ExtResource("3_wujnc")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_right = 65.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.737255, 0.137255, 0.172549, 1)
+theme_override_font_sizes/font_size = 38
+text = "Ghi nhớ"
+
+[node name="Control" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -875.0
+offset_right = 480.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="Control/Control"]
+anchors_preset = 0
+offset_left = 20.0
+offset_right = 980.0
+offset_bottom = 150.0
+
+[node name="Desc" type="Label" parent="Control/Control/Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Bất kỳ số nào nhân với 0 cũng bằng 0"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Examples" type="Control" parent="Control/Control"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_top = 150.0
+offset_right = 960.0
+offset_bottom = 650.0
+
+[node name="PlayBtn" type="TextureButton" parent="Control/Control"]
+layout_mode = 0
+offset_left = 798.0
+offset_top = 676.0
+offset_right = 862.0
+offset_bottom = 740.0
+texture_normal = ExtResource("2_xsjdb")

@@ -8,8 +8,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GodotOnReady\GodotOnReady.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\GodotGetNode\GodotGetNode.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>

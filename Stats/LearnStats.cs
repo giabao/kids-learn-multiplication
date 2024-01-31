@@ -8,14 +8,12 @@ public partial class LearnStats : Control {
     private const string ThemeTypeLabel = "StatsLabel";
     private const string ThemeTypeButton = "StatsButton";
 
-    private Info _info; // @onready
-    private PlayerData _playerData; // @onready
+    [GetNode] private Info _info = null!;
+    private PlayerData _playerData = PlayerData.Load();
 
     public override void _Ready() {
         GetNode<TextureButton>("BackBtn").WithSound().Pressed += Main.Back;
-        _info = GetNode<Info>("Info");
         _info.Visible = false;
-        _playerData = PlayerData.Load();
         InitStatsTable();
     }
 

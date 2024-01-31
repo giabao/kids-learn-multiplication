@@ -13,6 +13,7 @@ class Equation(int left, int right, string op, int result) : Operands(left, righ
     public readonly string Op = op;
     public readonly int Result = result;
     public string Question => $"{Left}{Op}{Right}=?";
+    public string Text => $"{Left}{Op}{Right}={Result}";
 }
 
 class MulEquation(int left, int right) : Equation(left, right, "x", left * right) {

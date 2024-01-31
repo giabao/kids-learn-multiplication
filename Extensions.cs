@@ -40,28 +40,32 @@ static class Extension {
         return self;
     }
 
-    public static T LayoutCenter<T>(this T self) where T : Control {
+    private static T OffsetCenter<T>(this T self) where T : Control {
         var (w, h) = self.Size;
         self.OffsetLeft = -w / 2;
         self.OffsetRight = w / 2;
         self.OffsetTop = -h / 2;
         self.OffsetBottom = h / 2;
-
-        return self.AnchorCenter();
+        return self;
     }
+
+    public static T LayoutCenter<T>(this T self) where T : Control => self.OffsetCenter().AnchorCenter();
+
+    public static void PosCenter<T>(this T self, Control parent) where T : Control =>
+        self.Position = (parent.Size - self.Size) / 2;
 
     public static T WithSound<T>(this T self) where T : BaseButton {
         self.Pressed += Main.Audio.PlayClick;
         return self;
     }
 
-    public static void TypingEffect<TC>(this TC c, Action<string> setText, string text, double speed = 0.1,
-        bool playClick = true)
-        where TC : Control {
+    // TODO use Tween
+    public static void TypingEffect<TC>(this TC c, Action<string> setText, string text, double time = 0.7,
+        bool playClick = false) where TC : Control {
         setText("");
         if (text == "") return;
         var i = 0;
-        var timer = new Timer { WaitTime = speed / text.Length, Autostart = true };
+        var timer = new Timer { WaitTime = time / text.Length, Autostart = true };
         c.AddChild(timer);
         timer.Timeout += () => {
             if (playClick) Main.Audio.PlayClick();
@@ -72,6 +76,9 @@ static class Extension {
         };
     }
 
-    public static void TypingEffect(this Label c, string text, double speed = 0.1, bool playClick = true) =>
-        TypingEffect(c, txt => c.Text = txt, text, speed, playClick);
+    public static void TypingEffect(this Label c, string? text = null, double time = 0.7, bool playClick = false) =>
+        TypingEffect(c, txt => c.Text = txt, text ?? c.Text, time, playClick);
+
+    public static Vector2 GetStringSize(this Label c) =>
+        c.GetThemeDefaultFont().GetStringSize(c.Text, fontSize: c.GetThemeFontSize("font_size"));
 }

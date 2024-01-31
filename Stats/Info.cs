@@ -5,11 +5,11 @@ using Kids.Models;
 namespace Kids.Stats;
 
 public partial class Info : VBoxContainer {
-    [OnReady("%")] private Label _title;
-    [OnReady("%")] private Label _desc;
-    [OnReady("%")] private Label _done;
-    [OnReady("%")] private Label _win;
-    [OnReady("%")] private Label _lose;
+    [GetNode("%")] private Label _title = null!;
+    [GetNode("%")] private Label _desc = null!;
+    [GetNode("%")] private Label _done = null!;
+    [GetNode("%")] private Label _win = null!;
+    [GetNode("%")] private Label _lose = null!;
     private int _level;
 
     public override void _Ready() {

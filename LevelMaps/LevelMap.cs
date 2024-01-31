@@ -7,7 +7,7 @@ namespace Kids.LevelMaps;
 
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
-    [OnReady] private ScrollContainer _scrollContainer;
+    [GetNode] private ScrollContainer _scrollContainer = null!;
     private int _scrollPerLevel; // @onready
 
     private static readonly Vector2[] ButtonPositions = [
@@ -41,7 +41,7 @@ public partial class LevelMap : Control {
                 IsCurrent = i == _playerData.Level,
                 Disabled = i > _playerData.Level,
             };
-            btn.WithSound().Pressed += () => Main.SceneTo(GameLevel.Load(i));
+            btn.WithSound().Pressed += () => Main.SceneTo(RuleReminder.Load(i));
             textureRect.AddChild(btn);
         }
 

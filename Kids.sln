@@ -2,7 +2,7 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kids", "Kids.csproj", "{A7BA9AE4-F192-454D-A641-A1E32CA5C114}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotOnReady", "..\GodotOnReady\GodotOnReady.csproj", "{65C42609-4C21-41F9-937E-7E0DB79A5068}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotGetNode", "..\GodotGetNode\GodotGetNode.csproj", "{65C42609-4C21-41F9-937E-7E0DB79A5068}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

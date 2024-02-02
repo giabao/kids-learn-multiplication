@@ -59,26 +59,6 @@ static class Extension {
         return self;
     }
 
-    // TODO use Tween
-    public static void TypingEffect<TC>(this TC c, Action<string> setText, string text, double time = 0.7,
-        bool playClick = false) where TC : Control {
-        setText("");
-        if (text == "") return;
-        var i = 0;
-        var timer = new Timer { WaitTime = time / text.Length, Autostart = true };
-        c.AddChild(timer);
-        timer.Timeout += () => {
-            if (playClick) Main.Audio.PlayClick();
-            setText(text[..++i]);
-            if (i < text.Length) return;
-            timer.Stop();
-            c.RemoveChild(timer);
-        };
-    }
-
-    public static void TypingEffect(this Label c, string? text = null, double time = 0.7, bool playClick = false) =>
-        TypingEffect(c, txt => c.Text = txt, text ?? c.Text, time, playClick);
-
-    public static Vector2 GetStringSize(this Label c) =>
+    public static Vector2 TextSize(this Label c) =>
         c.GetThemeDefaultFont().GetStringSize(c.Text, fontSize: c.GetThemeFontSize("font_size"));
 }

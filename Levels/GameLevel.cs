@@ -83,7 +83,7 @@ public partial class GameLevel : TextureRect {
         }
 
         var e = _equations[_questionNumber];
-        _equationBox.TypingEffect(e.Question, playClick: true);
+        _equationBox.TypingEffect(e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
                 var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();

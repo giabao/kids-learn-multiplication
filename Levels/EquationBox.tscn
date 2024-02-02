@@ -1,43 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct6xu5jeht1hc"]
+[gd_scene load_steps=3 format=3 uid="uid://ct6xu5jeht1hc"]
 
 [ext_resource type="Script" path="res://Levels/EquationBox.cs" id="1_nej8u"]
+[ext_resource type="Script" path="res://Levels/HBox.cs" id="2_1vmc4"]
 
-[node name="EquationBox" type="HBoxContainer"]
+[node name="EquationBox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 278.0
 offset_bottom = 110.0
-theme_override_constants/separation = 15
 script = ExtResource("1_nej8u")
 
-[node name="LeftSide" type="HBoxContainer" parent="."]
+[node name="LeftSide" type="Control" parent="."]
+custom_minimum_size = Vector2(166, 0)
 layout_mode = 2
-theme_override_constants/separation = 15
+anchors_preset = 0
+offset_right = 166.0
+offset_bottom = 110.0
+script = ExtResource("2_1vmc4")
 
 [node name="Left" type="Label" parent="LeftSide"]
+custom_minimum_size = Vector2(46, 110)
 layout_mode = 2
+offset_right = 46.0
+offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "3"
 
 [node name="Op" type="Label" parent="LeftSide"]
+custom_minimum_size = Vector2(44, 110)
 layout_mode = 2
+offset_left = 61.0
+offset_right = 105.0
+offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "x"
 
 [node name="Right" type="Label" parent="LeftSide"]
+custom_minimum_size = Vector2(46, 110)
 layout_mode = 2
+offset_left = 120.0
+offset_right = 166.0
+offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "2"
 
 [node name="Equal" type="Label" parent="."]
 layout_mode = 2
+offset_left = 181.0
+offset_right = 227.0
+offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "="
 
 [node name="Result" type="Label" parent="."]
 layout_mode = 2
+offset_left = 242.0
+offset_right = 278.0
+offset_bottom = 110.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 80
 text = "?"

@@ -84,8 +84,9 @@ autowrap_mode = 2
 [node name="Examples" type="Control" parent="Control/Control"]
 unique_name_in_owner = true
 anchors_preset = 0
+offset_left = 20.0
 offset_top = 150.0
-offset_right = 960.0
+offset_right = 920.0
 offset_bottom = 650.0
 
 [node name="PlayBtn" type="TextureButton" parent="Control/Control"]

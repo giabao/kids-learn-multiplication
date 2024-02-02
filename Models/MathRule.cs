@@ -24,7 +24,7 @@ class MulEquation(int left, int right) : Equation(left, right, "x", left * right
 abstract class MathRule<T>(string desc) where T : Equation {
     public readonly string Desc = desc;
     public abstract string Audio { get; }
-    public abstract List<T> Examples();
+    public abstract List<T> Examples(); // TODO remove
 }
 
 abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc) {

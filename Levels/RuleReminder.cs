@@ -24,51 +24,61 @@ public partial class RuleReminder : TextureRect {
         }), 0, _desc.Text.Length, 1);
 
         switch (_rule) {
-            case CompoundRule { Left: 0 } r:
-                int[] rights = [0, 1, 5, 123];
-                Vector2[] poses = [
-                    new(150, 100), new(550, 100),
-                    new(150, 300), new(550, 300)
-                ];
-                var boxes = new EquationBox[rights.Length];
-                foreach (var (right, i) in rights.WithIndex()) {
-                    var box = EquationBox.Load();
-                    boxes[i] = box;
-                    var ex = new MulEquation(r.Left, right);
-                    box.Text = ex.Text;
-                    box.ReLayout();
-                    box.PosCenter(_examples);
-                    var resultPos = box.Result.Position;
-                    tween.TweenCallback(Callable.From(() => {
-                        box.Text = "";
-                        box.Left.FontColor(Colors.DarkRed);
-                        _examples.AddChild(box);
-                    }));
-                    var text = ex.BaseText;
-                    tween.TweenMethod(Callable.From((int len) => box.Text = text[..len]),
-                        0, text.Length, 1);
-                    tween.TweenCallback(Callable.From(() => {
-                        box.Result.FontColor(Colors.DarkRed);
-                        box.Result.Position = box.Left.Position;
-                        box.Result.Text = box.Left.Text;
-                    }));
-                    tween.TweenProperty(box.Result, "position", resultPos, 0.6).SetDelay(0.5);
-                    box.RotatingEffect(tween).SetDelay(0.5);
-                    tween.TweenProperty(box, "modulate:a", 0f, 0.5);
-                }
-
-                tween.TweenCallback(Callable.From(() => { }));
-                foreach (var (box, pos) in boxes.Zip(poses)) {
-                    tween.Parallel().TweenProperty(box, "modulate:a", 1f, 0.3);
-                    tween.Parallel().TweenProperty(box, "scale", new Vector2(0.6f, 0.6f), 0.5);
-                    // rotate random angle from -0.5 to 0.5 radian == ~-28 to 28 degree
-                    tween.Parallel().TweenProperty(box, "rotation", GD.Randf() - 0.5f, 0.5);
-                    tween.Parallel().TweenProperty(box, "position", pos, 0.5);
-                }
-
+            case CompoundRule r:
+                Animate(tween, r.Left);
                 break;
             default: // TODO impl
                 break;
+        }
+    }
+
+    private void Animate(Tween tween, int right) {
+        Vector2[] poses = [
+            new(120, 100), new(520, 100),
+            new(120, 330), new(520, 330)
+        ];
+        int[] lefts = right switch {
+            0 => [0, 1, 5, 123],
+            1 => [3, 5, 15, 321],
+            10 => [1, 2, 10, 99],
+            _ => [] // never
+        };
+        var boxes = new EquationBox[lefts.Length];
+        foreach (var (left, i) in lefts.WithIndex()) {
+            var box = EquationBox.Load();
+            boxes[i] = box;
+            var ex = new MulEquation(left, right);
+            box.Text = ex.Text;
+            box.ReLayout();
+            box.PosCenter(_examples);
+            var resultPos = box.Result.Position;
+            var resultBased = right == 0 ? box.Right : box.Left;
+            tween.TweenCallback(Callable.From(() => {
+                box.Text = "";
+                resultBased.FontColor(Colors.DarkRed);
+                _examples.AddChild(box);
+            }));
+            var text = ex.BaseText;
+            tween.TweenMethod(Callable.From((int len) => box.Text = text[..len]),
+                0, text.Length, 1);
+            tween.TweenCallback(Callable.From(() => {
+                box.Result.FontColor(Colors.DarkRed);
+                box.Result.Position = resultBased.Position; // box._leftSide.Position == ZERO
+                box.Result.Text = resultBased.Text;
+            }));
+            tween.TweenProperty(box.Result, "position", resultPos, 0.6).SetDelay(0.5);
+            if (right == 10) tween.TweenCallback(Callable.From(() => box.Result.Text += "0")).SetDelay(0.4);
+            tween.TweenMethod(box.Rotate(), 0f, MathF.PI, 1f).SetDelay(0.5);
+            tween.TweenProperty(box, "modulate:a", 0f, 0.5);
+        }
+
+        tween.TweenCallback(Callable.From(() => { }));
+        foreach (var (box, pos) in boxes.Zip(poses)) {
+            tween.Parallel().TweenProperty(box, "modulate:a", 1f, 0.3);
+            tween.Parallel().TweenProperty(box, "scale", new Vector2(0.6f, 0.6f), 0.5);
+            // rotate random angle from -0.5 to 0.5 radian == ~-28 to 28 degree
+            tween.Parallel().TweenProperty(box, "rotation", GD.Randf() - 0.5f, 0.5);
+            tween.Parallel().TweenProperty(box, "position", pos, 0.5);
         }
     }
 

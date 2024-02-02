@@ -10,7 +10,7 @@ namespace Kids.Levels;
     [GetNode] private HBox _leftSide = null!;
     [GetNode("_leftSide.")] public Label Left = null!;
     [GetNode("_leftSide.")] private Label _op = null!;
-    [GetNode("_leftSide.")] private Label _right = null!;
+    [GetNode("_leftSide.")] public Label Right = null!;
     [GetNode] private Label _equal = null!;
     [GetNode] public Label Result = null!;
 
@@ -20,10 +20,9 @@ namespace Kids.Levels;
         return box;
     }
 
-    public MethodTweener RotatingEffect(Tween tween) {
-        var labelsInfo = _leftSide.GetChildren().Cast<Label>()
-            .Select(c => (c, c.Position)).ToArray();
-        return tween.TweenMethod(Callable.From((float angle) => {
+    public Callable Rotate() {
+        var labelsInfo = _leftSide.GetChildren().Cast<Label>().Select(c => (c, c.Position)).ToArray();
+        return Callable.From((float angle) => {
             foreach (var (c, pos) in labelsInfo) {
                 var half = c.Size / 2;
                 var pivot = _leftSide.Size / 2;
@@ -32,7 +31,7 @@ namespace Kids.Levels;
                 // make c's center at p
                 c.Position = p - half;
             }
-        }), 0f, MathF.PI, 1);
+        });
     }
 
     public void TypingEffect(string text) {
@@ -50,7 +49,7 @@ namespace Kids.Levels;
 
     public override void _Ready() {
         if ((Label?)Left is null) GetNodes();
-        _text = $"{Left!.Text}{_op.Text}{_right.Text}{_equal.Text}{Result.Text}";
+        _text = $"{Left!.Text}{_op.Text}{Right.Text}{_equal.Text}{Result.Text}";
     }
 
     public string Text {
@@ -61,7 +60,7 @@ namespace Kids.Levels;
             var i = value == "" ? -1 : value.IndexOf(Op, 1, StringComparison.Ordinal);
             if (i == -1) {
                 Left.Text = value;
-                _op.Text = _right.Text = _equal.Text = Result.Text = "";
+                _op.Text = Right.Text = _equal.Text = Result.Text = "";
                 return;
             }
 
@@ -70,12 +69,12 @@ namespace Kids.Levels;
             i += Op.Length;
             var j = i >= value.Length ? -1 : value.IndexOf('=', i);
             if (j == -1) {
-                _right.Text = value[i..];
+                Right.Text = value[i..];
                 _equal.Text = Result.Text = "";
                 return;
             }
 
-            _right.Text = value[i..j];
+            Right.Text = value[i..j];
             _equal.Text = "=";
             Result.Text = value[(j + 1)..];
         }

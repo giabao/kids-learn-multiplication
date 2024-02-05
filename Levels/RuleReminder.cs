@@ -8,13 +8,16 @@ namespace Kids.Levels;
 public partial class RuleReminder : TextureRect {
     [GetNode("%")] private Control _examples = null!;
     [GetNode("%")] private Label _desc = null!;
-    private MultiplyRule _rule = MultiplyRule.Rules[0];
+    private int _level;
 
     public override void _Ready() {
         GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;
-        switch (_rule) {
+        GetNode<TextureButton>("PlayBtn").WithSound().Pressed +=
+            () => Main.SceneTo(GameLevel.Load(_level), replace: true);
+        var rule = MultiplyRule.Rules[_level];
+        switch (rule) {
             case CompoundRule r:
-                _desc.Text = _rule.Desc;
+                _desc.Text = rule.Desc;
                 var textWidth = _desc.TextSize().X;
                 // position desc at center if single line
                 var x = _desc.Size.X < textWidth ? 20 : (_desc.Size.X - textWidth) / 2;
@@ -23,7 +26,7 @@ public partial class RuleReminder : TextureRect {
                 var tween = CreateTween();
                 tween.TweenMethod(Callable.From((int len) => {
                     if (_desc.Text.Length == len) return;
-                    _desc.Text = _rule.Desc[..len];
+                    _desc.Text = rule.Desc[..len];
                 }), 0, _desc.Text.Length, 1);
                 Animate(tween, r);
                 break;
@@ -120,7 +123,7 @@ public partial class RuleReminder : TextureRect {
 
     public static RuleReminder Load(int level) {
         var ret = (RuleReminder)ResourceLoader.Load<PackedScene>("res://Levels/RuleReminder.tscn").Instantiate();
-        ret._rule = MultiplyRule.Rules[level];
+        ret._level = level;
         return ret;
     }
 }

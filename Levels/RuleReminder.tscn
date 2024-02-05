@@ -84,10 +84,10 @@ offset_top = 150.0
 offset_right = 920.0
 offset_bottom = 650.0
 
-[node name="PlayBtn" type="TextureButton" parent="Control/Control"]
+[node name="PlayBtn" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 798.0
-offset_top = 676.0
-offset_right = 862.0
-offset_bottom = 740.0
+offset_left = 958.0
+offset_top = 751.0
+offset_right = 1044.0
+offset_bottom = 837.0
 texture_normal = ExtResource("2_xsjdb")

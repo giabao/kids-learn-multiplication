@@ -79,4 +79,9 @@ namespace Kids.Levels;
             Result.Text = value[(j + 1)..];
         }
     }
+
+    public void FontColor(Color color) {
+        foreach (var c in (Label[]) [Left, _op, Right, _equal, Result])
+            c.FontColor(color);
+    }
 }

@@ -12,27 +12,63 @@ public partial class RuleReminder : TextureRect {
 
     public override void _Ready() {
         GetNode<TextureButton>("%BackBtn").WithSound().Pressed += Main.Back;
-        _desc.Text = _rule.Desc;
-        var textWidth = _desc.TextSize().X;
-        if (_desc.Size.X > textWidth) // position desc at center
-            _desc.Position = new Vector2((_desc.Size.X - textWidth) / 2, 0);
-
-        var tween = CreateTween();
-        tween.TweenMethod(Callable.From((int len) => {
-            if (_desc.Text.Length == len) return;
-            _desc.Text = _rule.Desc[..len];
-        }), 0, _desc.Text.Length, 1);
-
         switch (_rule) {
             case CompoundRule r:
-                Animate(tween, r.Left);
+                _desc.Text = _rule.Desc;
+                var textWidth = _desc.TextSize().X;
+                // position desc at center if single line
+                var x = _desc.Size.X < textWidth ? 20 : (_desc.Size.X - textWidth) / 2;
+                _desc.Position = new(x, 0);
+
+                var tween = CreateTween();
+                tween.TweenMethod(Callable.From((int len) => {
+                    if (_desc.Text.Length == len) return;
+                    _desc.Text = _rule.Desc[..len];
+                }), 0, _desc.Text.Length, 1);
+                Animate(tween, r);
                 break;
-            default: // TODO impl
+            case SimpleRule r:
+                _desc.Text = "";
+                Animate(r);
                 break;
         }
     }
 
-    private void Animate(Tween tween, int right) {
+    private void Animate(SimpleRule rule) {
+        var tween = CreateTween().SetParallel();
+        var r = rule.ToEquation;
+        int[] rights = [r.Right - 1, r.Right, r.Right + 1];
+        foreach (var right in rights) {
+            var box = EquationBox.Load();
+            var ex = new MulEquation(r.Left, right);
+            box.Text = ex.Text;
+            box.ReLayout();
+            var d = right - r.Right;
+            var focus = d == 0;
+            box.Position = (_examples.Size - box.Size) / 2 + d * 130 * Vector2.Down;
+            if (focus) box.FontColor(Colors.DarkRed);
+            _examples.AddChild(box);
+            tween.TweenProperty(box, "modulate:a", focus ? 1f : 0.8f, 1).From(0f);
+            TweenScaleAndCenterPos(tween, box, 0.1f, focus ? 1f : 0.7f, 1);
+
+            if (ex.Left == ex.Right) continue;
+            tween.TweenMethod(box.Rotate(), 0f, MathF.PI, 1f).SetDelay(1.5);
+        }
+    }
+
+    private static void TweenScaleAndCenterPos(Tween tween, Control c,
+        float scaleFrom, float scaleTo, double duration) {
+        var posTo = c.Position + c.Size * (1 - scaleTo) / 2;
+        c.Position += c.Size * (1 - scaleFrom) / 2;
+        tween.TweenProperty(c, "scale", Vector2.One * scaleTo, duration)
+            .From(Vector2.One * scaleFrom)
+            .SetTrans(Tween.TransitionType.Elastic);
+        tween.TweenProperty(c, "position", posTo, duration)
+            .SetTrans(Tween.TransitionType.Elastic);
+    }
+
+    private void Animate(Tween tween, CompoundRule rule) {
+        var right = rule.Left;
         Vector2[] poses = [
             new(120, 100), new(520, 100),
             new(120, 330), new(520, 330)

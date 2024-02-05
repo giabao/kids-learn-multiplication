@@ -34,9 +34,15 @@ namespace Kids.Levels;
         });
     }
 
+    private Tween? _tween;
+
     public void TypingEffect(string text) {
+        Text = text;
+        ReLayout();
         Text = "";
-        CreateTween().TweenMethod(
+        _tween?.Kill();
+        _tween = CreateTween();
+        _tween.TweenMethod(
             Callable.From((int i) => {
                 if (i == Text.Length) return;
                 Main.Audio.PlayClick();

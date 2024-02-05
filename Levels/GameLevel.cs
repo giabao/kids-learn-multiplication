@@ -100,6 +100,7 @@ public partial class GameLevel : TextureRect {
     }
 
     private void OnAnswer(int answer) {
+        if (_questionNumber >= _equations.Count) return;
         var correct = answer == _equations[_questionNumber].Result;
         _playerData.FinishQuestion(correct, _level);
         if (correct) {
@@ -123,10 +124,10 @@ public partial class GameLevel : TextureRect {
         if (_level >= MultiplyRule.Rules.Length - 1) {
             GD.Print($"TODO Finished!");
         } else {
+            _playerData.FinishLevel(_level);
             Main.Audio.Play("win.mp3");
             if (_level == _playerData.Level) Main.Scene<LevelMap>(Main.LevelMapName).LevelScroll(1);
             GetTree().CreateTimer(1).Timeout += Main.Back;
-            _playerData.FinishLevel(_level);
         }
     }
 

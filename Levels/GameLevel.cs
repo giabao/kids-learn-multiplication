@@ -110,8 +110,10 @@ public partial class GameLevel : TextureRect {
 
     private void OnAnswer(int answer) {
         if (_questionNumber >= _equations.Count) return;
-        var correct = answer == _equations[_questionNumber].Result;
-        _playerData.FinishQuestion(correct, _level);
+        var e = _equations[_questionNumber];
+        var correct = answer == e.Result;
+        var lvl = MultiplyRule.RuleIndex(e.Left, e.Right);
+        _playerData.FinishQuestion(correct, lvl);
         if (correct) {
             _progress.Value += _progress.MaxValue / (2 * _equations.Count);
             NextQuestion();
@@ -130,6 +132,7 @@ public partial class GameLevel : TextureRect {
     }
 
     private void OnFinishLevel() {
+        _playerData.Save(); // save stats because we haven't save in _playerData.FinishQuestion
         if (_level >= MultiplyRule.Rules.Length - 1) {
             GD.Print($"TODO Finished!");
         } else {

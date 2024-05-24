@@ -37,7 +37,7 @@ public partial class PlayerData : Resource {
         }
     }
 
-    private void Save() {
+    public void Save() {
         ResourceSaver.Save(this, SavePath);
     }
 }

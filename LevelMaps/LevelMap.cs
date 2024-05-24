@@ -8,6 +8,7 @@ namespace Kids.LevelMaps;
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
     [GetNode] private ScrollContainer _scrollContainer = null!;
+    [GetNode("%")] private TextureRect _textureRect = null!;
     private int _scrollPerLevel; // @onready
 
     private static readonly Vector2[] ButtonPositions = [
@@ -30,7 +31,6 @@ public partial class LevelMap : Control {
             () => Main.ShowModal("res://Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=
             () => Main.SceneTo("res://Stats/LearnStats.tscn");
-        var textureRect = GetNode<TextureRect>("%TextureRect");
         var pos = Vector2.Zero;
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
             pos = ButtonPositions[i % ButtonPositions.Length];
@@ -42,12 +42,22 @@ public partial class LevelMap : Control {
                 Disabled = i > _playerData.Level,
             };
             btn.WithSound().Pressed += () => Main.SceneTo(RuleReminder.Load(i));
-            textureRect.AddChild(btn);
+            _textureRect.AddChild(btn);
         }
 
         _scrollPerLevel = Convert.ToInt32(pos.X / MultiplyRule.Rules.Length);
         LevelScroll(_playerData.Level - 2);
     }
 
-    public void LevelScroll(int level) => _scrollContainer.ScrollHorizontal += level * _scrollPerLevel;
+    private void LevelScroll(int level) => _scrollContainer.ScrollHorizontal += level * _scrollPerLevel;
+
+    public void OnFinishLevel(int level) {
+        if (_playerData.Level != level) return;
+        _playerData.FinishLevel(level);
+        _textureRect.GetChild<LevelButton>(level).IsCurrent = false;
+        LevelButton btn = _textureRect.GetChild<LevelButton>(_playerData.Level);
+        btn.Disabled = false;
+        btn.IsCurrent = true;
+        LevelScroll(1);
+    }
 }

@@ -124,9 +124,8 @@ public partial class GameLevel : TextureRect {
         if (_level >= MultiplyRule.Rules.Length - 1) {
             GD.Print($"TODO Finished!");
         } else {
-            _playerData.FinishLevel(_level);
             Main.Audio.Play("win.mp3");
-            if (_level == _playerData.Level) Main.Scene<LevelMap>(Main.LevelMapName).LevelScroll(1);
+            Main.Scene<LevelMap>(Main.LevelMapName).OnFinishLevel(_level);
             GetTree().CreateTimer(1).Timeout += Main.Back;
         }
     }

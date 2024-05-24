@@ -86,7 +86,16 @@ public partial class GameLevel : TextureRect {
         _equationBox.TypingEffect(e.Question);
         switch (Mode) {
             case AnswerMode.Choise:
-                var answers = TakeUniques([e.Result], () => Rnd.Next(101), _buttons.Length).ToArray();
+                List<int> answers0 = [e.Result];
+                if (e is MulEquation) {
+                    answers0.Add((e.Left + 1) * e.Right);
+                    answers0.Add((e.Right + 1) * e.Left);
+                    if (e.Left > 0) answers0.Add((e.Left - 1) * e.Right);
+                    if (e.Right > 0) answers0.Add((e.Right - 1) * e.Left);
+                    answers0 = answers0.Distinct().Take(_buttons.Length).ToList();
+                }
+
+                var answers = TakeUniques(answers0, () => Rnd.Next(101), _buttons.Length).ToArray();
                 Rnd.Shuffle(answers);
                 foreach (var (btn, answer) in _buttons.Zip(answers)) {
                     btn.Text = answer.ToString();

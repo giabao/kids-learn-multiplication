@@ -39,6 +39,7 @@ public partial class Main : Node {
 
     private AudioStreamManager _audio = new();
     public static AudioStreamManager Audio => I._audio;
+    public static AudioStreamPlayer MusicPlayer => I.GetNode<AudioStreamPlayer>("MusicPlayer");
 
     public static void ShowModal(Control c, bool hideOnPressedOutside = true) {
         var bg = new ModalBg(c, hideOnPressedOutside);

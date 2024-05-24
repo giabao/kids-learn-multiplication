@@ -8,5 +8,4 @@ script = ExtResource("1_gglm7")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_f45l8")
-autoplay = true
 bus = &"Music"

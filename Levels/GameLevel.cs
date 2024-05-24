@@ -88,10 +88,10 @@ public partial class GameLevel : TextureRect {
             case AnswerMode.Choise:
                 List<int> answers0 = [e.Result];
                 if (e is MulEquation) {
-                    answers0.Add((e.Left + 1) * e.Right);
-                    answers0.Add((e.Right + 1) * e.Left);
                     if (e.Left > 0) answers0.Add((e.Left - 1) * e.Right);
                     if (e.Right > 0) answers0.Add((e.Right - 1) * e.Left);
+                    answers0.Add((e.Left + 1) * e.Right);
+                    answers0.Add((e.Right + 1) * e.Left);
                     answers0 = answers0.Distinct().Take(_buttons.Length).ToList();
                 }
 

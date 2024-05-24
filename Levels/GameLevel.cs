@@ -135,7 +135,7 @@ public partial class GameLevel : TextureRect {
     private static List<MulEquation> Examples(PlayerData p, int level) {
         if (level == 0) {
             var r0 = (CompoundRule)MultiplyRule.Rules[0];
-            TakeUniques([], () => r0.RandomEquation(Rnd, true));
+            return TakeUniques([], () => r0.RandomEquation(Rnd, true));
         }
 
         // Take random examples for rules in LOWER level. Random weight is stats.LosePercent

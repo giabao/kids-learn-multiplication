@@ -141,7 +141,7 @@ public partial class GameLevel : TextureRect {
         // Take random examples for rules in LOWER level. Random weight is stats.LosePercent
         var (totalLosePercent, level2Percents) = p.Stats
             .Where(e => e.Key < level)
-            .Aggregate((0, (List<(int, int)>) []), (acc, pair) => {
+            .Aggregate((0, (List<(int, int)>)[]), (acc, pair) => {
                 var (level, stat) = pair;
                 var (sum, list) = acc;
                 sum += stat.LosePercent;

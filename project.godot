@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Kids"
+config/name="Multiplication Table Game"
+config/name_localized={
+"vi_VN": "Bảng cửu chương (game)"
+}
+config/version="1.0.0"
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/icons/ic_launcher_round.webp"
 
 [display]
 
@@ -37,6 +41,11 @@ import/blender/enabled=false
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[internationalization]
+
+locale/country_filter=["VN"]
+locale/language_filter=["vi"]
 
 [rendering]
 

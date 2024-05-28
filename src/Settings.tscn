@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c6c44n3qq42a8"]
 
 [ext_resource type="Texture2D" uid="uid://da0poavr214j7" path="res://assets/settings/settings-bg.png" id="1_mkrrd"]
-[ext_resource type="Script" path="res://Settings.cs" id="2_6jyrq"]
+[ext_resource type="Script" path="res://src/Settings.cs" id="2_6jyrq"]
 [ext_resource type="Texture2D" uid="uid://mtrgsui0wc5s" path="res://assets/settings/button-close.png" id="3_fwejg"]
 [ext_resource type="Texture2D" uid="uid://k3rahg2rsdy4" path="res://assets/settings/button-off.png" id="4_ekcpj"]
 [ext_resource type="Texture2D" uid="uid://epscsn2w3fst" path="res://assets/settings/button-on.png" id="5_ovyf7"]

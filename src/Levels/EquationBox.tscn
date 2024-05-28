@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ct6xu5jeht1hc"]
 
-[ext_resource type="Script" path="res://Levels/EquationBox.cs" id="1_nej8u"]
-[ext_resource type="Script" path="res://Levels/HBox.cs" id="2_1vmc4"]
+[ext_resource type="Script" path="res://src/Levels/EquationBox.cs" id="1_nej8u"]
+[ext_resource type="Script" path="res://src/Levels/HBox.cs" id="2_1vmc4"]
 
 [node name="EquationBox" type="Control"]
 layout_mode = 3

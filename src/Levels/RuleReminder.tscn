@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8m8ul6v8mqkg"]
 
-[ext_resource type="Script" path="res://Levels/RuleReminder.cs" id="1_lbltn"]
+[ext_resource type="Script" path="res://src/Levels/RuleReminder.cs" id="1_lbltn"]
 [ext_resource type="Texture2D" uid="uid://b4e3p5tntditu" path="res://assets/background.jpg" id="1_v52x7"]
 [ext_resource type="Texture2D" uid="uid://cjsyd8x0abvp5" path="res://assets/play.png" id="2_xsjdb"]
 [ext_resource type="Texture2D" uid="uid://3cjdrndw1xm5" path="res://assets/arrow_left.png" id="3_wujnc"]

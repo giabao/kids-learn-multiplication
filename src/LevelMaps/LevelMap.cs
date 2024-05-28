@@ -28,9 +28,9 @@ public partial class LevelMap : Control {
 
     public override void _Ready() {
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
-            () => Main.ShowModal("res://Settings.tscn");
+            () => Main.ShowModal("res://src/Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=
-            () => Main.SceneTo("res://Stats/LearnStats.tscn");
+            () => Main.SceneTo("res://src/Stats/LearnStats.tscn");
         var pos = Vector2.Zero;
         foreach (var (rule, i) in MultiplyRule.Rules.WithIndex()) {
             pos = ButtonPositions[i % ButtonPositions.Length];

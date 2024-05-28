@@ -59,7 +59,7 @@ public partial class Main : Node {
 
     public override void _Ready() {
         AddChild(_audio);
-        SceneTo("res://LevelMaps/LevelMap.tscn", LevelMapName);
+        SceneTo("res://src/LevelMaps/LevelMap.tscn", LevelMapName);
     }
 }
 

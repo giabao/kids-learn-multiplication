@@ -122,7 +122,7 @@ public partial class RuleReminder : TextureRect {
     }
 
     public static RuleReminder Load(int level) {
-        var ret = (RuleReminder)ResourceLoader.Load<PackedScene>("res://Levels/RuleReminder.tscn").Instantiate();
+        var ret = (RuleReminder)ResourceLoader.Load<PackedScene>("res://src/Levels/RuleReminder.tscn").Instantiate();
         ret._level = level;
         return ret;
     }

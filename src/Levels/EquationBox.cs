@@ -15,7 +15,7 @@ namespace Kids.Levels;
     [GetNode] public Label Result = null!;
 
     public static EquationBox Load() {
-        var box = ResourceLoader.Load<PackedScene>("res://Levels/EquationBox.tscn").Instantiate<EquationBox>();
+        var box = ResourceLoader.Load<PackedScene>("res://src/Levels/EquationBox.tscn").Instantiate<EquationBox>();
         box.GetNodes();
         return box;
     }

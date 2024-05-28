@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ejqjje1eblg8"]
 
-[ext_resource type="Script" path="res://Main.cs" id="1_gglm7"]
+[ext_resource type="Script" path="res://src/Main.cs" id="1_gglm7"]
 [ext_resource type="AudioStream" uid="uid://owxo2y8fwqv3" path="res://assets/music.ogg" id="2_f45l8"]
 
 [node name="Main" type="Node"]

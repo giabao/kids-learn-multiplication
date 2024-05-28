@@ -43,7 +43,7 @@ public partial class GameLevel : TextureRect {
     [Signal] public delegate void AnswerDoneEventHandler();
 
     public static GameLevel Load(int level) {
-        var ret = (GameLevel)ResourceLoader.Load<PackedScene>("res://Levels/GameLevel.tscn").Instantiate();
+        var ret = (GameLevel)ResourceLoader.Load<PackedScene>("res://src/Levels/GameLevel.tscn").Instantiate();
         ret._level = level;
         return ret;
     }

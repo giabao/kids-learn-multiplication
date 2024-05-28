@@ -5,6 +5,7 @@ using Kids.Models;
 
 namespace Kids.LevelMaps;
 
+[NoAutoGetNodes]
 public partial class LevelMap : Control {
     private const int BgWidth = 2222;
     [GetNode] private ScrollContainer _scrollContainer = null!;
@@ -27,6 +28,7 @@ public partial class LevelMap : Control {
     private PlayerData _playerData = PlayerData.Load();
 
     public override void _Ready() {
+        GetNodes();
         GetNode<TextureButton>("SettingsBtn").WithSound().Pressed +=
             () => Main.ShowModal("res://src/Settings.tscn");
         GetNode<TextureButton>("StatsBtn").WithSound().Pressed +=

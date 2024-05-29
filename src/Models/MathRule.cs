@@ -3,20 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-internal class Operands(int left, int right) {
-    public readonly int Left = left;
-    public readonly int Right = right;
-}
+internal record Operands(int Left, int Right) { }
 
-internal class Equation(int left, int right, string op, int result) : Operands(left, right) {
-    public readonly string Op = op;
-    public readonly int Result = result;
+internal record Equation(int Left, int Right, string Op, int Result) : Operands(Left, Right) {
     public string BaseText => $"{Left}{Op}{Right}=";
     public string Question => $"{BaseText}?";
     public string Text => $"{BaseText}{Result}";
 }
 
-internal class MulEquation(int left, int right) : Equation(left, right, "x", left * right) {
+internal sealed record MulEquation(int Left, int Right) : Equation(Left, Right, "x", Left * Right) {
     public MulEquation Swap => new(Right, Left);
 }
 

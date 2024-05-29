@@ -159,7 +159,7 @@ public partial class GameLevel : TextureRect {
 
     private const int QuestionsPerLevel = 4;
 
-    private static List<MulEquation> Examples(PlayerData p, int level) {
+    internal static List<MulEquation> Examples(PlayerData p, int level) {
         if (level == 0) {
             var r0 = (CompoundRule)MultiplyRule.Rules[0];
             return TakeUniques([], () => r0.RandomEquation(Rnd, true));

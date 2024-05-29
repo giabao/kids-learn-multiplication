@@ -44,12 +44,13 @@ abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc)
             for (var right = left; right <= OperandMax; right++)
                 Rules[i++] = new SimpleRule(left, right);
     }
+    public static int RuleIndex(int left, int right) => left <= right ? RuleIndexImpl(left, right) : RuleIndexImpl(right, left);
 
-    public static int RuleIndex(int left, int right) => (left, right) switch {
-        (0, _) or (_, 0) => 0,
-        (1, _) or (_, 1) => 1,
-        (10, _) or (_, 10) => 2,
-        _ => (left - 2) * (OperandMax - 2 + 1) + (right - 2) + 3
+    private static int RuleIndexImpl(int left, int right) => (left, right) switch {
+        (0, _) => 0,
+        (1, _) => 1,
+        (_, 10) or (10, _) => 2,
+        _ => (left - 2) * (OperandMax - 1) - (left - 2) * (left - 3) / 2 + right - left + 3
     };
 }
 

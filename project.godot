@@ -15,7 +15,7 @@ config/name_localized={
 "vi_VN": "Bảng cửu chương (game)"
 }
 config/version="1.0.0"
-run/main_scene="res://src/Main.tscn"
+run/main_scene="res://src/Main4Test.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
 config/icon="res://assets/icons/ic_launcher_round.webp"
 

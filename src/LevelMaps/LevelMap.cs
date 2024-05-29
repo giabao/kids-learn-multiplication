@@ -62,6 +62,8 @@ public partial class LevelMap : Control {
         var btn = _textureRect.GetChild<LevelButton>(_playerData.Level);
         btn.Disabled = false;
         btn.IsCurrent = true;
-        LevelScroll(1);
+        if (level > 3) {
+            LevelScroll(1);
+        }
     }
 }

@@ -1,7 +1,5 @@
-using System.Linq;
-using Godot;
-
 namespace Kids;
+using Godot;
 
 public partial class Settings : TextureRect {
     private const int MusicBusIdx = 1;

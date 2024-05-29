@@ -1,7 +1,6 @@
+namespace Kids;
 using System.Collections.Generic;
 using Godot;
-
-namespace Kids;
 
 public partial class Main : Node {
     public const string LevelMapName = "LevelMap";
@@ -13,18 +12,24 @@ public partial class Main : Node {
     }
 
     public static void Back() {
-        if (Scenes.Count <= 1) return;
+        if (Scenes.Count <= 1) {
+            return;
+        }
         var current = Scenes.Pop();
         ShowPeek();
         I.RemoveChild(current);
     }
 
     public static void SceneTo(Node scene, string? name = null, bool replace = false) {
-        if (replace) Back();
+        if (replace) {
+            Back();
+        }
         ShowPeek(visible: false);
         Scenes.Push(scene);
         I.AddChild(scene);
-        if (name != null) scene.Name = name;
+        if (name != null) {
+            scene.Name = name;
+        }
     }
 
     public static void SceneTo(string path, string? name = null) =>
@@ -33,8 +38,12 @@ public partial class Main : Node {
     public static T Scene<T>(string name) where T : Node => I.GetNode<T>(name);
 
     private static void ShowPeek(bool visible = true) {
-        if (Scenes.IsEmpty()) return;
-        if (Scenes.Peek() is Control c) c.Visible = visible;
+        if (Scenes.IsEmpty()) {
+            return;
+        }
+        if (Scenes.Peek() is Control c) {
+            c.Visible = visible;
+        }
     }
 
     private AudioStreamManager _audio = new();
@@ -52,7 +61,9 @@ public partial class Main : Node {
 
     public static void HideModal() {
         var bg = I.GetChildOrNull<ModalBg>(-2);
-        if (bg == null) return;
+        if (bg == null) {
+            return;
+        }
         I.RemoveChild(I.GetChild(-1));
         I.RemoveChild(bg);
     }
@@ -72,9 +83,13 @@ internal partial class ModalBg(Control c, bool hideOnPressedOutside) : ColorRect
     }
 
     public override void _GuiInput(InputEvent @event) {
-        if (!hideOnPressedOutside) return;
+        if (!hideOnPressedOutside) {
+            return;
+        }
         AcceptEvent();
-        if (@event is not InputEventMouseButton e || e.Pressed || c.GetRect().HasPoint(e.Position)) return;
+        if (@event is not InputEventMouseButton e || e.Pressed || c.GetRect().HasPoint(e.Position)) {
+            return;
+        }
         Main.HideModal();
     }
 }

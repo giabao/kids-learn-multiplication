@@ -1,11 +1,10 @@
+namespace Kids;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace Kids;
-
-static class Extension {
+internal static class Extension {
     public static bool IsEmpty<T>(this Stack<T> self) => self.Count == 0;
     public static bool IsEmpty<T>(this Queue<T> self) => self.Count == 0;
     public static bool NextBool(this Random r) => r.NextDouble() >= 0.5;

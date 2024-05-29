@@ -1,8 +1,7 @@
+namespace Kids.Stats;
 using Godot;
 using Kids.Levels;
 using Kids.Models;
-
-namespace Kids.Stats;
 
 public partial class Info : VBoxContainer {
     [GetNode("%")] private Label _title = null!;

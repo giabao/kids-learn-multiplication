@@ -1,6 +1,5 @@
-using Godot;
-
 namespace Kids.LevelMaps;
+using Godot;
 
 public partial class LevelButton : TextureButton {
     private Label _label = new Label { OffsetLeft = -3, OffsetTop = -44 }.AnchorCenter();

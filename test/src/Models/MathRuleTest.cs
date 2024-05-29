@@ -1,7 +1,7 @@
 namespace Kids.Models;
 
-using Godot;
 using Chickensoft.GoDotTest;
+using Godot;
 using Shouldly;
 
 public class MathRuleTest(Node testScene) : TestClass(testScene) {

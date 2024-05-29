@@ -1,15 +1,14 @@
+namespace Kids.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kids.Models;
-
-class Operands(int left, int right) {
+internal class Operands(int left, int right) {
     public readonly int Left = left;
     public readonly int Right = right;
 }
 
-class Equation(int left, int right, string op, int result) : Operands(left, right) {
+internal class Equation(int left, int right, string op, int result) : Operands(left, right) {
     public readonly string Op = op;
     public readonly int Result = result;
     public string BaseText => $"{Left}{Op}{Right}=";
@@ -17,17 +16,17 @@ class Equation(int left, int right, string op, int result) : Operands(left, righ
     public string Text => $"{BaseText}{Result}";
 }
 
-class MulEquation(int left, int right) : Equation(left, right, "x", left * right) {
+internal class MulEquation(int left, int right) : Equation(left, right, "x", left * right) {
     public MulEquation Swap => new(Right, Left);
 }
 
-abstract class MathRule<T>(string desc) where T : Equation {
+internal abstract class MathRule<T>(string desc) where T : Equation {
     public readonly string Desc = desc;
     public abstract string Audio { get; }
     public abstract List<T> Examples(); // TODO remove
 }
 
-abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc) {
+internal abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc) {
     public abstract string Name { get; }
     public override string Audio => $"rule/{Name}";
     public readonly int Left = left;
@@ -40,9 +39,11 @@ abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc)
         Rules[1] = new CompoundRule(1, "Bất kỳ số nào nhân với 1 cũng bằng chính số ấy", [3, 15]);
         Rules[2] = new CompoundRule(10, "Nhân một số với 10 = Thêm 0 vào sau số đó", [1, 10, 12]);
         var i = 3;
-        for (var left = 2; left <= OperandMax; left++)
-            for (var right = left; right <= OperandMax; right++)
+        for (var left = 2; left <= OperandMax; left++) {
+            for (var right = left; right <= OperandMax; right++) {
                 Rules[i++] = new SimpleRule(left, right);
+            }
+        }
     }
     public static int RuleIndex(int left, int right) => left <= right ? RuleIndexImpl(left, right) : RuleIndexImpl(right, left);
 
@@ -54,7 +55,7 @@ abstract class MultiplyRule(int left, string desc) : MathRule<MulEquation>(desc)
     };
 }
 
-sealed class CompoundRule(int left, string desc, int[] rightExamples) : MultiplyRule(left, desc) {
+internal sealed class CompoundRule(int left, string desc, int[] rightExamples) : MultiplyRule(left, desc) {
     public override string Name => $"x{Left}";
 
     public override List<MulEquation> Examples() =>
@@ -70,7 +71,7 @@ sealed class CompoundRule(int left, string desc, int[] rightExamples) : Multiply
     }
 }
 
-sealed class SimpleRule(int left, int right) : MultiplyRule(left, $"{left} x {right} = {left * right}") {
+internal sealed class SimpleRule(int left, int right) : MultiplyRule(left, $"{left} x {right} = {left * right}") {
     public override string Name => $"{Left}x{right}";
     public override List<MulEquation> Examples() => [new(Left, right)];
     public MulEquation ToEquation => new(Left, right);

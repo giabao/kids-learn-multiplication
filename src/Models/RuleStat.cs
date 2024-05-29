@@ -1,7 +1,6 @@
+namespace Kids.Models;
 using System;
 using Godot;
-
-namespace Kids.Models;
 
 public partial class RuleStat : Resource {
     [Export] public int Win;
@@ -13,12 +12,11 @@ public partial class RuleStat : Resource {
     public RuleStat() : this(0, 0) {
     }
 
-    // Warn: Use primary constructor (IDE0290)
-    // But we cannot use primary constructor
-    // CS9105: Cannot use primary constructor parameter 'int win' in this context. 
+    // disable IDE0290 to fix CS9105: Cannot use primary constructor parameter 'int win' in this context.
     // at Godot.SourceGenerators/Godot.SourceGenerators.ScriptPropertyDefValGenerator/Kids.RuleStat_ScriptPropertyDefVal.generated.cs(17,35)
-
+#pragma warning disable IDE0290
     public RuleStat(int win, int lose) {
+#pragma warning restore IDE0290
         Win = win;
         Lose = lose;
     }

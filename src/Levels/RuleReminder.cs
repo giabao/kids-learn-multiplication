@@ -1,9 +1,8 @@
-using Godot;
+namespace Kids.Levels;
 using System;
 using System.Linq;
+using Godot;
 using Kids.Models;
-
-namespace Kids.Levels;
 
 public partial class RuleReminder : TextureRect {
     [GetNode("%")] private Control _examples = null!;
@@ -25,7 +24,9 @@ public partial class RuleReminder : TextureRect {
 
                 var tween = CreateTween();
                 tween.TweenMethod(Callable.From((int len) => {
-                    if (_desc.Text.Length == len) return;
+                    if (_desc.Text.Length == len) {
+                        return;
+                    }
                     _desc.Text = rule.Desc[..len];
                 }), 0, _desc.Text.Length, 1);
                 Animate(tween, r);
@@ -33,6 +34,8 @@ public partial class RuleReminder : TextureRect {
             case SimpleRule r:
                 _desc.Text = "";
                 Animate(r);
+                break;
+            default:
                 break;
         }
     }
@@ -49,12 +52,16 @@ public partial class RuleReminder : TextureRect {
             var d = right - r.Right;
             var focus = d == 0;
             box.Position = (_examples.Size - box.Size) / 2 + d * 130 * Vector2.Down;
-            if (focus) box.FontColor(Colors.DarkRed);
+            if (focus) {
+                box.FontColor(Colors.DarkRed);
+            }
             _examples.AddChild(box);
             tween.TweenProperty(box, "modulate:a", focus ? 1f : 0.8f, 1).From(0f);
             TweenScaleAndCenterPos(tween, box, 0.1f, focus ? 1f : 0.7f, 1);
 
-            if (ex.Left == ex.Right) continue;
+            if (ex.Left == ex.Right) {
+                continue;
+            }
             tween.TweenMethod(box.Rotate(), 0f, MathF.PI, 1f).SetDelay(1.5);
         }
     }
@@ -73,8 +80,10 @@ public partial class RuleReminder : TextureRect {
     private void Animate(Tween tween, CompoundRule rule) {
         var right = rule.Left;
         Vector2[] poses = [
-            new(120, 100), new(520, 100),
-            new(120, 330), new(520, 330)
+            new(120, 100),
+            new(520, 100),
+            new(120, 330),
+            new(520, 330)
         ];
         int[] lefts = right switch {
             0 => [0, 1, 5, 123],
@@ -106,7 +115,9 @@ public partial class RuleReminder : TextureRect {
                 box.Result.Text = resultBased.Text;
             }));
             tween.TweenProperty(box.Result, "position", resultPos, 0.6).SetDelay(0.5);
-            if (right == 10) tween.TweenCallback(Callable.From(() => box.Result.Text += "0")).SetDelay(0.4);
+            if (right == 10) {
+                tween.TweenCallback(Callable.From(() => box.Result.Text += "0")).SetDelay(0.4);
+            }
             tween.TweenMethod(box.Rotate(), 0f, MathF.PI, 1f).SetDelay(0.5);
             tween.TweenProperty(box, "modulate:a", 0f, 0.5);
         }

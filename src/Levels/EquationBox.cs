@@ -1,10 +1,10 @@
+namespace Kids.Levels;
 using System;
 using System.Linq;
 using Godot;
 
-namespace Kids.Levels;
-
-[NoAutoGetNodes] public partial class EquationBox : HBox {
+[NoAutoGetNodes]
+public partial class EquationBox : HBox {
     private const string Op = "x";
 
     [GetNode] private HBox _leftSide = null!;
@@ -26,7 +26,7 @@ namespace Kids.Levels;
             foreach (var (c, pos) in labelsInfo) {
                 var half = c.Size / 2;
                 var pivot = _leftSide.Size / 2;
-                // rotate c's center around _leftSide's center 
+                // rotate c's center around _leftSide's center
                 var p = (pos + half - pivot).Rotated(angle) + pivot;
                 // make c's center at p
                 c.Position = p - half;
@@ -44,7 +44,9 @@ namespace Kids.Levels;
         _tween = CreateTween();
         _tween.TweenMethod(
             Callable.From((int i) => {
-                if (i == Text.Length) return;
+                if (i == Text.Length) {
+                    return;
+                }
                 Main.Audio.PlayClick();
                 Text = text[..i];
             }),
@@ -54,14 +56,18 @@ namespace Kids.Levels;
     private string _text = "";
 
     public override void _Ready() {
-        if ((Label?)Left is null) GetNodes();
+        if (Left is null) {
+            GetNodes();
+        }
         _text = $"{Left!.Text}{_op.Text}{Right.Text}{_equal.Text}{Result.Text}";
     }
 
     public string Text {
         get => _text;
         set {
-            if (_text == value) return;
+            if (_text == value) {
+                return;
+            }
             _text = value;
             var i = value == "" ? -1 : value.IndexOf(Op, 1, StringComparison.Ordinal);
             if (i == -1) {
@@ -87,7 +93,8 @@ namespace Kids.Levels;
     }
 
     public void FontColor(Color color) {
-        foreach (var c in (Label[]) [Left, _op, Right, _equal, Result])
+        foreach (var c in (Label[])[Left, _op, Right, _equal, Result]) {
             c.FontColor(color);
+        }
     }
 }

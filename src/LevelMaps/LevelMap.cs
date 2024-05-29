@@ -1,9 +1,8 @@
+namespace Kids.LevelMaps;
 using System;
 using Godot;
 using Kids.Levels;
 using Kids.Models;
-
-namespace Kids.LevelMaps;
 
 [NoAutoGetNodes]
 public partial class LevelMap : Control {
@@ -54,10 +53,13 @@ public partial class LevelMap : Control {
     private void LevelScroll(int level) => _scrollContainer.ScrollHorizontal += level * _scrollPerLevel;
 
     public void OnFinishLevel(int level) {
-        if (_playerData.Level != level) return;
+        if (_playerData.Level != level) {
+            return;
+        }
+
         _playerData.FinishLevel(level);
         _textureRect.GetChild<LevelButton>(level).IsCurrent = false;
-        LevelButton btn = _textureRect.GetChild<LevelButton>(_playerData.Level);
+        var btn = _textureRect.GetChild<LevelButton>(_playerData.Level);
         btn.Disabled = false;
         btn.IsCurrent = true;
         LevelScroll(1);

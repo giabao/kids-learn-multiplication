@@ -1,7 +1,6 @@
+namespace Kids;
 using System.Collections.Generic;
 using Godot;
-
-namespace Kids;
 
 public partial class AudioStreamManager : Node {
     private readonly StringName _soundBus = "Sound";
@@ -18,14 +17,14 @@ public partial class AudioStreamManager : Node {
         }
     }
 
-    public void Play(string path) {
-        _audioPathQueue.Enqueue($"res://assets/{path}");
-    }
+    public void Play(string path) => _audioPathQueue.Enqueue($"res://assets/{path}");
 
     public void PlayClick() => Play("click.wav");
 
     public override void _Process(double delta) {
-        if (_playerQueue.IsEmpty() || _audioPathQueue.IsEmpty()) return;
+        if (_playerQueue.IsEmpty() || _audioPathQueue.IsEmpty()) {
+            return;
+        }
         var p = _playerQueue.Dequeue();
         var audioPath = _audioPathQueue.Dequeue();
         p.Stream = ResourceLoader.Load<AudioStream>(audioPath);

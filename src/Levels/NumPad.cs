@@ -1,10 +1,9 @@
-using Godot;
-using System.Linq;
-
 namespace Kids.Levels;
+using System.Linq;
+using Godot;
 
 public partial class NumPad : Control {
-    private string value = "?";
+    private string _value = "?";
 
     [Signal] public delegate void ValueChangedEventHandler(string value);
 
@@ -12,24 +11,30 @@ public partial class NumPad : Control {
 
     public override void _Ready() {
         GetNode<TextureButton>("Del").Pressed += () => {
-            if (value == "?") return;
-            value = value[..^1];
-            if (value == "") value = "?";
-            EmitSignal(SignalName.ValueChanged, value);
+            if (_value == "?") {
+                return;
+            }
+            _value = _value[..^1];
+            if (_value == "") {
+                _value = "?";
+            }
+            EmitSignal(SignalName.ValueChanged, _value);
         };
         GetNode<TextureButton>("Enter").Pressed += () => {
-            if (value != "?") {
-                EmitSignal(SignalName.Submit, value.ToInt());
+            if (_value != "?") {
+                EmitSignal(SignalName.Submit, _value.ToInt());
             }
         };
         foreach (var btn in GetNode("GridContainer").GetChildren().Cast<Button>()) {
             btn.Pressed += () => {
-                if (value == "?") value = "";
-                value += btn.Text;
-                EmitSignal(SignalName.ValueChanged, value);
+                if (_value == "?") {
+                    _value = "";
+                }
+                _value += btn.Text;
+                EmitSignal(SignalName.ValueChanged, _value);
             };
         }
     }
 
-    public void Reset() => value = "?";
+    public void Reset() => _value = "?";
 }

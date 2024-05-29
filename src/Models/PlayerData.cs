@@ -1,7 +1,6 @@
+namespace Kids.Models;
 using System;
 using Godot;
-
-namespace Kids.Models;
 
 // Map level number to RuleStat
 // Use Godot's Dictionary to support [Export]
@@ -14,21 +13,28 @@ public partial class PlayerData : Resource {
     [Export] public int Level; // [0, MultiplyRule.Rules.Length)
 
     public void FinishLevel(int level) {
-        if (level == Level) Level++;
+        if (level == Level) {
+            Level++;
+        }
         Save();
     }
 
     public void FinishQuestion(bool correct, int level) {
         var stat = Stats.TryGetValue(level, out var s) ? s : new RuleStat();
-        if (correct) stat.Win++;
-        else stat.Lose++;
+        if (correct) {
+            stat.Win++;
+        } else {
+            stat.Lose++;
+        }
         Stats[level] = stat;
     }
 
     private const string SavePath = "user://PlayerData.tres";
 
     public static PlayerData Load() {
-        if (!ResourceLoader.Exists(SavePath)) return new();
+        if (!ResourceLoader.Exists(SavePath)) {
+            return new();
+        }
         try {
             return ResourceLoader.Load<PlayerData>(SavePath);
         } catch (Exception e) {
@@ -37,7 +43,5 @@ public partial class PlayerData : Resource {
         }
     }
 
-    public void Save() {
-        ResourceSaver.Save(this, SavePath);
-    }
+    public void Save() => ResourceSaver.Save(this, SavePath);
 }

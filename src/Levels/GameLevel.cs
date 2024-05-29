@@ -1,3 +1,4 @@
+namespace Kids.Levels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,9 +6,7 @@ using Godot;
 using Kids.LevelMaps;
 using Kids.Models;
 
-namespace Kids.Levels;
-
-enum AnswerMode {
+internal enum AnswerMode {
     Choise,
     NumPad
 }
@@ -27,7 +26,9 @@ public partial class GameLevel : TextureRect {
     private AnswerMode Mode {
         get => _mode;
         set {
-            if (_mode == value) return;
+            if (_mode == value) {
+                return;
+            }
             _mode = value;
             _buttonsGrid.Visible = _mode == AnswerMode.Choise;
             _numPad.Visible = _mode == AnswerMode.NumPad;
@@ -72,7 +73,9 @@ public partial class GameLevel : TextureRect {
         Mode = mode;
         _equations = Examples(_playerData, _level);
         _questionNumber = -1;
-        if (mode == AnswerMode.Choise) _progress.Value = 0;
+        if (mode == AnswerMode.Choise) {
+            _progress.Value = 0;
+        }
         NextQuestion();
     }
 
@@ -87,9 +90,13 @@ public partial class GameLevel : TextureRect {
         switch (Mode) {
             case AnswerMode.Choise:
                 List<int> answers0 = [e.Result];
-                if (e is MulEquation) {
-                    if (e.Left > 0) answers0.Add((e.Left - 1) * e.Right);
-                    if (e.Right > 0) answers0.Add((e.Right - 1) * e.Left);
+                if (e is not null) {
+                    if (e.Left > 0) {
+                        answers0.Add((e.Left - 1) * e.Right);
+                    }
+                    if (e.Right > 0) {
+                        answers0.Add((e.Right - 1) * e.Left);
+                    }
                     answers0.Add((e.Left + 1) * e.Right);
                     answers0.Add((e.Right + 1) * e.Left);
                     answers0 = answers0.Distinct().Take(_buttons.Length).ToList();
@@ -105,11 +112,15 @@ public partial class GameLevel : TextureRect {
             case AnswerMode.NumPad:
                 _numPad.Reset();
                 break;
+            default:
+                break;
         }
     }
 
     private void OnAnswer(int answer) {
-        if (_questionNumber >= _equations.Count) return;
+        if (_questionNumber >= _equations.Count) {
+            return;
+        }
         var e = _equations[_questionNumber];
         var correct = answer == e.Result;
         var lvl = MultiplyRule.RuleIndex(e.Left, e.Right);
@@ -117,7 +128,9 @@ public partial class GameLevel : TextureRect {
         if (correct) {
             _progress.Value += _progress.MaxValue / (2 * _equations.Count);
             NextQuestion();
-        } else EmitSignal(SignalName.HealthDown);
+        } else {
+            EmitSignal(SignalName.HealthDown);
+        }
     }
 
     private void OnAnswerDone() {
@@ -127,6 +140,8 @@ public partial class GameLevel : TextureRect {
                 break;
             case AnswerMode.NumPad:
                 EmitSignal(SignalName.FinishLevel);
+                break;
+            default:
                 break;
         }
     }
@@ -164,15 +179,19 @@ public partial class GameLevel : TextureRect {
         var e = GetEquation(MultiplyRule.Rules[level]);
 
         List<MulEquation> ret = [e];
-        if (e.Left != e.Right) ret.Add(e.Swap);
+        if (e.Left != e.Right) {
+            ret.Add(e.Swap);
+        }
         TakeUniques(ret, () => {
             var percent = Rnd.Next(totalLosePercent);
             var level = level2Percents.FirstOrDefault(p => p.Item2 > percent).Item1;
-            MultiplyRule r = MultiplyRule.Rules[level];
+            var r = MultiplyRule.Rules[level];
             var e = GetEquation(r);
             return Rnd.NextBool() ? e : e.Swap;
         });
-        if (e.Left != e.Right) ret.Swap(1, Random.Shared.Next(ret.Count));
+        if (e.Left != e.Right) {
+            ret.Swap(1, Random.Shared.Next(ret.Count));
+        }
         return ret;
     }
 
@@ -187,7 +206,9 @@ public partial class GameLevel : TextureRect {
         for (var i = result.Count; i < count; i++) {
             while (true) {
                 var t = rndGen();
-                if (result.Contains(t)) continue;
+                if (result.Contains(t)) {
+                    continue;
+                }
                 result.Add(t);
                 break;
             }

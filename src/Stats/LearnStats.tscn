@@ -46,12 +46,11 @@ texture = ExtResource("2_dnmth")
 
 [node name="BackBtn" type="TextureButton" parent="."]
 layout_mode = 0
-offset_left = 59.0
-offset_top = 46.0
-offset_right = 107.0
-offset_bottom = 94.0
+offset_left = 46.0
+offset_top = 36.0
+offset_right = 132.0
+offset_bottom = 122.0
 texture_normal = ExtResource("1_p2ytr")
-stretch_mode = 4
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0

@@ -15,5 +15,6 @@ obj/
 # others
 addons/
 /.idea
-/_out/
+/_out/*
+!_out/.gdignore
 /android/

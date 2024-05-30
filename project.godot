@@ -17,6 +17,7 @@ config/name_localized={
 config/version="1.0.0"
 run/main_scene="res://src/Main4Test.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
+boot_splash/image="res://_ref/splash.png"
 config/icon="res://assets/icons/ic_launcher_round.webp"
 
 [display]
@@ -49,7 +50,7 @@ locale/language_filter=["vi"]
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.870588, 0.945098, 0.980392, 1)

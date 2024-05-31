@@ -18,3 +18,8 @@ addons/
 /_out/*
 !_out/.gdignore
 /android/
+xcuserdata
+/ios/MoltenVK.xcframework/
+/ios/TimesTrek/
+/ios/TimesTrek.pck
+/ios/TimesTrek.xcframework/

@@ -30,9 +30,9 @@ internal abstract class MultiplyRule(int left, string desc) : MathRule<MulEquati
     public static readonly MultiplyRule[] Rules = new MultiplyRule[3 + (OperandMax - 1) * OperandMax / 2];
 
     static MultiplyRule() {
-        Rules[0] = new CompoundRule(0, "Bất kỳ số nào nhân với 0 cũng bằng 0", [0, 6, 99]);
-        Rules[1] = new CompoundRule(1, "Bất kỳ số nào nhân với 1 cũng bằng chính số ấy", [3, 15]);
-        Rules[2] = new CompoundRule(10, "Nhân một số với 10 = Thêm 0 vào sau số đó", [1, 10, 12]);
+        Rules[0] = new CompoundRule(0, "Any number multiplied by 0 is equal to 0", [0, 6, 99]);
+        Rules[1] = new CompoundRule(1, "Any number multiplied by 1 is the number itself", [3, 15]);
+        Rules[2] = new CompoundRule(10, "Multiply any number by 10 = simply add a 0 at the end of the number", [1, 10, 12]);
         var i = 3;
         for (var left = 2; left <= OperandMax; left++) {
             for (var right = left; right <= OperandMax; right++) {

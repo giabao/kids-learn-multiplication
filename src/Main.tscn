@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://ejqjje1eblg8"]
 
 [ext_resource type="Script" path="res://src/Main.cs" id="1_gglm7"]
-[ext_resource type="AudioStream" uid="uid://owxo2y8fwqv3" path="res://assets/music.ogg" id="2_f45l8"]
+[ext_resource type="AudioStream" uid="uid://256nvxb0vl2u" path="res://assets/Moonlight Sonata.ogg" id="2_8xw1e"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_gglm7")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_f45l8")
+stream = ExtResource("2_8xw1e")
 bus = &"Music"

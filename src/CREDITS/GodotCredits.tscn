@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmmk31d282i46"]
+
+[ext_resource type="Script" path="res://src/CREDITS/GodotCredits.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bomf1dsx0duii" path="res://assets/arrow_left_white.svg" id="2_fnpcl"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+title_size = 36
+text_size = 26
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="CreditsContainer" type="Control" parent="."]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Line" type="Label" parent="CreditsContainer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 625.0
+offset_bottom = 667.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+horizontal_alignment = 1
+
+[node name="Back" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 40.0
+offset_right = 134.0
+offset_bottom = 126.0
+texture_normal = ExtResource("2_fnpcl")
+
+[connection signal="pressed" from="Back" to="." method="finish"]

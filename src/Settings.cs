@@ -15,5 +15,6 @@ public partial class Settings : TextureRect {
             toggledOn => AudioServer.SetBusMute(SoundBusIdx, !toggledOn);
         GetNode<TextureButton>("Vibration").WithSound().Toggled += toggledOn => GD.PrintErr("TODO impl");
         GetNode<TextureButton>("Notification").WithSound().Toggled += toggledOn => GD.PrintErr("TODO impl");
+        GetNode<Button>("Credits").WithSound().Pressed += () => Main.SceneTo("res://src/CREDITS/GodotCredits.tscn");
     }
 }

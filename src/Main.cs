@@ -75,10 +75,8 @@ public partial class Main : Node {
 }
 
 internal partial class ModalBg(Control c, bool hideOnPressedOutside) : ColorRect {
-    private static readonly Vector2 ScreenSize = new(1280, 960);
-
     public override void _Ready() {
-        Size = ScreenSize;
+        Size = GetWindow().Size;
         Color = new(0, 0, 0, 0.2f);
     }
 
